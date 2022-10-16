@@ -1,5 +1,5 @@
-const initApp = require("./intialize/app");
-const initDB = require("./intialize/initDb");
+const app = require("./intialize/app");
+const database = require("./intialize/database");
 
-initDB();
-initApp();
+app();
+database();
