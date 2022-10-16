@@ -1,10 +1,10 @@
-const mainRoute = require("./routes/index");
+const mainRoute = require("../routes/index");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const express = require("express");
 const app = express();
-const { PORT } = require("./config/env");
+const { PORT } = require("../config/env");
 
 module.exports = () => {
 	app.use(logger("dev"));
