@@ -45,8 +45,36 @@ block content
                         option(value='3') Three
             .inputGroup
                 label Dự án
-                input.form-control(name="Project")
+                select.form-select(aria-label='Default select example')
+                    option(selected='') Open this select menu
+                    option(value='1') One
+                    option(value='2') Two
+                    option(value='3') Three
             .inputGroup.col
                 label Địa chỉ hiển thị trên tin đăng
                 input.form-control(name="DisplayName" placeholder="Bạn có thể bổ sung hẻm,ngách,ngõ,...")
         .p-5.shadow.d-flex.flex-column.gap-3
+            h3 Thông tin bài viết
+            .inputGroup
+                label Tiêu đề
+                textarea.form-control(name="Title")
+            .inputGroup 
+                label Mô tả
+                textarea.form-control(name="Description")
+            
+        .p-5.shadow.d-flex.flex-column.gap-3
+            h3 Thông tin bất động sản
+            .inputGroup
+                label Diện tích
+                input.form-control(name="Area" placeholder="Nhập diện tích,VD:80")
+            .row
+                .inputGroup.col-8
+                    label Mức giá
+                    input.form-control(name="Area" placeholder="Nhập giá,VD:1200000")
+                .inputGroup.col-4
+                    label Đơn vị
+                    select.form-select(aria-label='Default select example')
+                        option(selected='') Open this select menu
+                        option(value='1') One
+                        option(value='2') Two
+                        option(value='3') Three
