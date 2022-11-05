@@ -9,14 +9,14 @@ const { PORT } = require("../config/env");
 module.exports = () => {
 	app.use(logger("dev"));
 	app.use(express.json());
-	app.use(express.urlencoded({ extended: false }));
+	app.use(express.urlencoded({ extended: true }));
 	app.use(cookieParser());
 	app.set("view engine", "pug");
 	app.use(express.static(path.join(__dirname, "public")));
 	app.use("/", mainRoute);
 	app.listen(PORT, () =>
 		console.log(
-			`Real-Estate service listening on http://localhost:${PORT}`
+			`HB Real-Estate service listening on http://localhost:${PORT}`
 		)
 	);
 };

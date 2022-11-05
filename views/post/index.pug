@@ -1,0 +1,52 @@
+extends ../common/layout.pug 
+block content
+    form.d-flex.flex-column.gap-3(method="POST")
+        .p-5.shadow.d-flex.flex-column.gap-3
+            h3 Thông tin cơ bản
+            .inputGroup
+                label Loại bất động sản
+                select.form-select(aria-label='Default select example')
+                    option(selected='') Open this select menu
+                    option(value='1') One
+                    option(value='2') Two
+                    option(value='3') Three
+            .inputGroup
+                label Địa chỉ
+                input.form-control(name="Address" placeholder="219 Âu Dương Lân")
+            .row
+                .inputGroup.col
+                    label Tỉnh, thành phố
+                    select.form-select(aria-label='Default select example')
+                        option(selected='') Open this select menu
+                        option(value='1') One
+                        option(value='2') Two
+                        option(value='3') Three
+                .inputGroup.col
+                    label Quận, huyện
+                    select.form-select(aria-label='Default select example')
+                        option(selected='') Open this select menu
+                        option(value='1') One
+                        option(value='2') Two
+                        option(value='3') Three
+            .row
+                .inputGroup.col
+                    label Phường, xã
+                    select.form-select(aria-label='Default select example')
+                        option(selected='') Open this select menu
+                        option(value='1') One
+                        option(value='2') Two
+                        option(value='3') Three
+                .inputGroup.col
+                    label Đường, phố
+                    select.form-select(aria-label='Default select example')
+                        option(selected='') Open this select menu
+                        option(value='1') One
+                        option(value='2') Two
+                        option(value='3') Three
+            .inputGroup
+                label Dự án
+                input.form-control(name="Project")
+            .inputGroup.col
+                label Địa chỉ hiển thị trên tin đăng
+                input.form-control(name="DisplayName" placeholder="Bạn có thể bổ sung hẻm,ngách,ngõ,...")
+        .p-5.shadow.d-flex.flex-column.gap-3

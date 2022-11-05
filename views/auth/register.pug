@@ -1,7 +1,7 @@
 extends ../common/layout.pug 
 block content
     h3.text-center Đăng ký
-    form.d-flex.flex-column.gap-3(method="POST")
+    form.d-flex.flex-column.gap-3(method="POST" action="/auth/register")
         .inputGroup
             label Họ và tên
             input.form-control(name="Name")
@@ -21,5 +21,6 @@ block content
             label Avatar
             input.form-control(type="file",name="Avatar")       
         .d-flex.justify-content-center.gap-3
-            .button(type="submit").btn.btn-dark Đăng nhập
+            button(type="submit").btn.btn-dark Đăng nhập
             a(href="/auth/register").text-decoration-none.fw-bold.mt-1 Đăng ký
+    
