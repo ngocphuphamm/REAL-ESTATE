@@ -5,25 +5,25 @@ block content
             h3 Thông tin cơ bản
             .inputGroup
                 label Loại bất động sản
-                select.form-select(aria-label='Default select example')
+                select.form-select(name="categoryID")
                     option(selected='') Open this select menu
                     option(value='1') One
                     option(value='2') Two
                     option(value='3') Three
             .inputGroup
                 label Địa chỉ
-                input.form-control(name="Address" placeholder="219 Âu Dương Lân")
+                input.form-control(name="address" placeholder="219 Âu Dương Lân")
             .row
                 .inputGroup.col
                     label Tỉnh, thành phố
-                    select.form-select(aria-label='Default select example')
+                    select.form-select(name="provinceID")
                         option(selected='') Open this select menu
                         option(value='1') One
                         option(value='2') Two
                         option(value='3') Three
                 .inputGroup.col
                     label Quận, huyện
-                    select.form-select(aria-label='Default select example')
+                    select.form-select(name="districtID")
                         option(selected='') Open this select menu
                         option(value='1') One
                         option(value='2') Two
@@ -31,50 +31,80 @@ block content
             .row
                 .inputGroup.col
                     label Phường, xã
-                    select.form-select(aria-label='Default select example')
+                    select.form-select(name="wardID")
                         option(selected='') Open this select menu
                         option(value='1') One
                         option(value='2') Two
                         option(value='3') Three
                 .inputGroup.col
                     label Đường, phố
-                    select.form-select(aria-label='Default select example')
+                    select.form-select(name="streetID")
                         option(selected='') Open this select menu
                         option(value='1') One
                         option(value='2') Two
                         option(value='3') Three
             .inputGroup
                 label Dự án
-                select.form-select(aria-label='Default select example')
+                select.form-select(name="projectID")
                     option(selected='') Open this select menu
                     option(value='1') One
                     option(value='2') Two
                     option(value='3') Three
             .inputGroup.col
                 label Địa chỉ hiển thị trên tin đăng
-                input.form-control(name="DisplayName" placeholder="Bạn có thể bổ sung hẻm,ngách,ngõ,...")
+                input.form-control(name="displayName" placeholder="Bạn có thể bổ sung hẻm,ngách,ngõ,...")
         .p-5.shadow.d-flex.flex-column.gap-3
             h3 Thông tin bài viết
             .inputGroup
                 label Tiêu đề
-                textarea.form-control(name="Title")
+                textarea.form-control(name="title" placeholder="VD: Bán nhà riêng 50m2 chính chủ tại Quận 5")
             .inputGroup 
                 label Mô tả
-                textarea.form-control(name="Description")
-            
+                textarea.form-control(name="description" placeholder="Nhập mô tả chung về bất động sản của bạn. Ví dụ: Khu nhà có vị trí thuận lợi, gần công viên, gần trường học ... ")
         .p-5.shadow.d-flex.flex-column.gap-3
             h3 Thông tin bất động sản
             .inputGroup
                 label Diện tích
-                input.form-control(name="Area" placeholder="Nhập diện tích,VD:80")
+                input.form-control(name="area" placeholder="Nhập diện tích,VD:80")
+            .inputGroup
+                label Mức giá
+                input.form-control(name="price" placeholder="Nhập giá,VD:1200000")
+            .inputGroup 
+                label Số phòng ngủ
+                input.form-control(name="bedroom" type="number")
+            .inputGroup 
+                label Số phòng tắm
+                input.form-control(name="bathroom" type="number")
             .row
-                .inputGroup.col-8
-                    label Mức giá
-                    input.form-control(name="Area" placeholder="Nhập giá,VD:1200000")
-                .inputGroup.col-4
-                    label Đơn vị
-                    select.form-select(aria-label='Default select example')
+                .inputGroup.col
+                    label Số tầng
+                    input.form-control(name="floor" type="number")
+                .inputGroup.col
+                    label Hướng nhà
+                    select.form-select(name="direction")
                         option(selected='') Open this select menu
                         option(value='1') One
                         option(value='2') Two
                         option(value='3') Three
+            .row
+                .inputGroup.col
+                    label Hướng ban công
+                    select.form-select(name="balconyDirection")
+                        option(selected='') Open this select menu
+                        option(value='1') One
+                        option(value='2') Two
+                        option(value='3') Three
+                .inputGroup.col
+                    label Diện tích mặt tiền
+                    input.form-control(name="fontageArea" type="number")
+            .inputGroup
+                label Nội thất
+                input.form-control(name="furniture")
+        .p-5.shadow.d-flex.flex-column.gap-3
+            h3 Hình ảnh & Video
+            .inputGroup
+                label Media
+                input.form-control(name="medias" type="file")
+        .p-4.shadow.d-flex
+            button.btn.btn-outline-dark Xem trước giao diện
+            button.btn.btn-danger.ms-auto Tiếp tục >
