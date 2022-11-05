@@ -12,8 +12,8 @@ END; $$
 
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS tinhTong $$
-CREATE PROCEDURE sp_Register(pr_username varchar(50), pr_password varchar(50),pr_name varchar(150),pr_email varchar(100),pr_phone varchar(11),pr_avatar text)
+DROP PROCEDURE IF EXISTS sp_Register $$
+CREATE PROCEDURE sp_Register(pr_username varchar(50), pr_password varchar(50),pr_name varchar(150),pr_email varchar(100),pr_phone varchar(11))
 BEGIN
 	DECLARE isExists int DEFAULT -1;
     DECLARE pw varchar(50);
@@ -28,8 +28,8 @@ BEGIN
 	SET pw= fnc_SHAPassword(pr_password, privateKey);
 	
     #Với table tbl_account có cấu trúc tbl_account(username varchar(50), password varchar(100), private_key varchar(50))
-	INSERT INTO USERS(userid ,name,username,email,password,phone,avatar)
-    VALUES (privateKey,pr_name,pr_username,pr_email,pr_password,pr_phone,pr_avatar);
+	INSERT INTO USERS(userid ,name,username,email,password,phone)
+    VALUES (privateKey,pr_name,pr_username,pr_email,pw,pr_phone);
     
      IF(row_count()>0) THEN	
      	SELECT 'Đã đăng ký thành công !'; #hoặc trả về user vừa được đăng ký
