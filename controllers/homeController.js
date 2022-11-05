@@ -1,5 +1,5 @@
 module.exports = {
 	getHome: async (req, res) => {
-		res.render("index");
+		res.render("home/index");
 	},
 };
