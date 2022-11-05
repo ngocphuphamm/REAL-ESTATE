@@ -17,21 +17,22 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
-DROP DATABASE IF  EXISTS `BDS` ;
+DROP DATABASE IF EXISTS `BDS` ;
 CREATE database BDS;
 USE `BDS`;
 
 SET SQL_SAFE_UPDATES = 0;
 
 
-create table realestates (
+create table posts (
 	reid char(40) not null ,
 	categoryid char(40)  not null,
-	name varchar(255) COLLATE utf8_unicode_ci  not null,
+	title varchar(255) COLLATE utf8_unicode_ci not null,
 	description text COLLATE utf8_unicode_ci not null,
+	displayDistrict text COLLATE utf8_unicode_ci,
 	price decimal(15,2) not null,
 	area varchar(100) not null,
-	view int not null default 0,
+	viewCount int not null default 0,
 	approve tinyint(1) not null default 0,
 	phone varchar(20) not null,
 	address varchar(255) COLLATE utf8_unicode_ci  not null,
@@ -41,11 +42,18 @@ create table realestates (
 	createdat timestamp not null default current_timestamp,
 	updatedat timestamp,
 	userid char(40) not null,
-	projectid char(20) ,
+	projectid char(20),
 	streetid int not null,
 	wardid int not null,
 	districtid int not null,
 	provinceid int not null,
+	bedroom int not null,
+	bathroom int not null,
+	floor int not null,
+	direction text COLLATE utf8_unicode_ci not null,
+	balconyDirection text COLLATE utf8_unicode_ci not null,
+	furniture text COLLATE utf8_unicode_ci not null,
+	fontageArea int not null,
  primary key (reid))ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 create table users (
@@ -67,22 +75,16 @@ create table convenient (
 	name varchar(150) COLLATE utf8_unicode_ci not null,
  primary key (convenientid))ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-create table images (
-	imageid char(40) not null ,
+create table medias (
+	mediaid char(40) not null ,
 	url text not null,
 	reid char(40) not null,
- primary key (imageid))ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+ primary key (mediaid))ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 create table categories (
 	categoryid char(40) not null ,
 	name varchar(255) COLLATE utf8_unicode_ci not null,
  primary key (categoryid))ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-create table realestate_convenient (
-	convenientid char(40) not null,
-	reid char(40) not null,
-	content varchar(255) COLLATE utf8_unicode_ci not null,
- primary key (convenientid,reid))ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 create table comment (
 	commentid char(40) not null,
@@ -140,21 +142,19 @@ create table street (
  primary key (streetid))ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-alter table images add foreign key (reid) references realestates (reid) on delete  restrict on update  restrict;
-alter table realestate_convenient add foreign key (reid) references realestates (reid) on delete  restrict on update  restrict;
-alter table comment add foreign key (reid) references realestates (reid) on delete  restrict on update  restrict;
-alter table report add foreign key (reid) references realestates (reid) on delete  restrict on update  restrict;
-alter table realestates add foreign key (userid) references users (userid) on delete  restrict on update  restrict;
+alter table medias add foreign key (reid) references posts (reid) on delete  restrict on update  restrict;
+alter table comment add foreign key (reid) references posts (reid) on delete  restrict on update  restrict;
+alter table report add foreign key (reid) references posts (reid) on delete  restrict on update  restrict;
+alter table posts add foreign key (userid) references users (userid) on delete  restrict on update  restrict;
 alter table comment add foreign key (userid) references users (userid) on delete  restrict on update  restrict;
-alter table realestate_convenient add foreign key (convenientid) references convenient (convenientid) on delete  restrict on update  restrict;
-alter table realestates add foreign key (categoryid) references categories (categoryid) on delete  restrict on update  restrict;
+alter table posts add foreign key (categoryid) references categories (categoryid) on delete  restrict on update  restrict;
 alter table district add foreign key (provinceid) references province (provinceid) on delete  restrict on update  restrict;
 alter table project add foreign key (districtid,provinceid) references district (districtid,provinceid) on delete  restrict on update  restrict;
 alter table ward add foreign key (districtid,provinceid) references district (districtid,provinceid) on delete  restrict on update  restrict;
 alter table street add foreign key (districtid,provinceid) references district (districtid,provinceid) on delete  restrict on update  restrict;
-alter table realestates add foreign key (wardid,districtid,provinceid) references ward (wardid,districtid,provinceid) on delete  restrict on update  restrict;
-alter table realestates add foreign key (projectid) references project (projectid) on delete  restrict on update  restrict;
-alter table realestates add foreign key (streetid) references street (streetid) on delete  restrict on update  restrict;
+alter table posts add foreign key (wardid,districtid,provinceid) references ward (wardid,districtid,provinceid) on delete  restrict on update  restrict;
+alter table posts add foreign key (projectid) references project (projectid) on delete  restrict on update  restrict;
+alter table posts add foreign key (streetid) references street (streetid) on delete  restrict on update  restrict;
 
 
 /* users permissions */
