@@ -1,55 +1,36 @@
 extends ../common/layout.pug 
 block content
-    form.d-flex.flex-column.gap-3(method="POST")
+    form.d-flex.flex-column.gap-3(method="POST" action="/user/post")
         .p-5.shadow.d-flex.flex-column.gap-3
             h3 Thông tin cơ bản
             .inputGroup
                 label Loại bất động sản
-                select.form-select(name="categoryID")
-                    option(selected='') Open this select menu
-                    option(value='1') One
-                    option(value='2') Two
-                    option(value='3') Three
+                select.form-select(name="categoryid" required id="category")
+                    option(value="") Chọn
             .inputGroup
                 label Địa chỉ
-                input.form-control(name="address" placeholder="219 Âu Dương Lân")
+                input.form-control(name="address" placeholder="219 Âu Dương Lân" required)
             .row
                 .inputGroup.col
                     label Tỉnh, thành phố
-                    select.form-select(name="provinceID")
-                        option(selected='') Open this select menu
-                        option(value='1') One
-                        option(value='2') Two
-                        option(value='3') Three
+                    select.form-select(name="provinceid" id="province" required)
+                        option(value="") Chọn
                 .inputGroup.col
                     label Quận, huyện
-                    select.form-select(name="districtID")
-                        option(selected='') Open this select menu
-                        option(value='1') One
-                        option(value='2') Two
-                        option(value='3') Three
+                    select.form-select(name="districtid" id="district" required)
+                        option(value="") Chọn
             .row
                 .inputGroup.col
                     label Phường, xã
-                    select.form-select(name="wardID")
-                        option(selected='') Open this select menu
-                        option(value='1') One
-                        option(value='2') Two
-                        option(value='3') Three
+                    select.form-select(name="wardid" id="ward" required)
+                        option(value="") Chọn
                 .inputGroup.col
                     label Đường, phố
-                    select.form-select(name="streetID")
-                        option(selected='') Open this select menu
-                        option(value='1') One
-                        option(value='2') Two
-                        option(value='3') Three
+                    select.form-select(name="streetid" id="street")
+                        option(value="") Chọn
             .inputGroup
                 label Dự án
-                select.form-select(name="projectID")
-                    option(selected='') Open this select menu
-                    option(value='1') One
-                    option(value='2') Two
-                    option(value='3') Three
+                select.form-select(name="projectid" id="project")
             .inputGroup.col
                 label Địa chỉ hiển thị trên tin đăng
                 input.form-control(name="displayName" placeholder="Bạn có thể bổ sung hẻm,ngách,ngõ,...")
@@ -57,54 +38,65 @@ block content
             h3 Thông tin bài viết
             .inputGroup
                 label Tiêu đề
-                textarea.form-control(name="title" placeholder="VD: Bán nhà riêng 50m2 chính chủ tại Quận 5")
+                textarea.form-control(name="title" placeholder="VD: Bán nhà riêng 50m2 chính chủ tại Quận 5" required)
             .inputGroup 
                 label Mô tả
-                textarea.form-control(name="description" placeholder="Nhập mô tả chung về bất động sản của bạn. Ví dụ: Khu nhà có vị trí thuận lợi, gần công viên, gần trường học ... ")
+                textarea.form-control(name="description" placeholder="Nhập mô tả chung về bất động sản của bạn. Ví dụ: Khu nhà có vị trí thuận lợi, gần công viên, gần trường học ... " required)
         .p-5.shadow.d-flex.flex-column.gap-3
             h3 Thông tin bất động sản
             .inputGroup
                 label Diện tích
-                input.form-control(name="area" placeholder="Nhập diện tích,VD:80")
+                input.form-control(name="area" placeholder="Nhập diện tích,VD:80" type="number" required)
             .inputGroup
                 label Mức giá
-                input.form-control(name="price" placeholder="Nhập giá,VD:1200000")
+                input.form-control(name="price" placeholder="Nhập giá,VD:1200000" required)
             .inputGroup 
                 label Số phòng ngủ
-                input.form-control(name="bedroom" type="number")
+                input.form-control(name="bedroom" type="number" placeholder="VD: 4")
             .inputGroup 
                 label Số phòng tắm
-                input.form-control(name="bathroom" type="number")
+                input.form-control(name="bathroom" type="number" placeholder="VD: 4")
             .row
                 .inputGroup.col
                     label Số tầng
-                    input.form-control(name="floor" type="number")
+                    input.form-control(name="floor" type="number" placeholder="VD: 4")
                 .inputGroup.col
                     label Hướng nhà
                     select.form-select(name="direction")
-                        option(selected='') Open this select menu
-                        option(value='1') One
-                        option(value='2') Two
-                        option(value='3') Three
+                        option(value="") Chọn
+                        option(value='East') Đông
+                        option(value='West') Tây
+                        option(value='South') Nam
+                        option(value='North') Bắc
+                        option(value="NorthEast") Đông Bắc
+                        option(value="NorthWest") Tây Bắc
+                        option(value="SouthWest") Tây Nam 
+                        option(value="SouthEast") Đông Nam
             .row
                 .inputGroup.col
                     label Hướng ban công
                     select.form-select(name="balconyDirection")
-                        option(selected='') Open this select menu
-                        option(value='1') One
-                        option(value='2') Two
-                        option(value='3') Three
+                        option(value="") Chọn
+                        option(value='East') Đông
+                        option(value='West') Tây
+                        option(value='South') Nam
+                        option(value='North') Bắc
+                        option(value="NorthEast") Đông Bắc
+                        option(value="NorthWest") Tây Bắc
+                        option(value="SouthWest") Tây Nam 
+                        option(value="SouthEast") Đông Nam
                 .inputGroup.col
                     label Diện tích mặt tiền
-                    input.form-control(name="fontageArea" type="number")
+                    input.form-control(name="fontageArea" type="number" placeholder="VD: 22 (Đơn vị m2)")
             .inputGroup
                 label Nội thất
-                input.form-control(name="furniture")
+                input.form-control(name="furniture" placeholder="Vd nội thất đầy đủ")
         .p-5.shadow.d-flex.flex-column.gap-3
             h3 Hình ảnh & Video
             .inputGroup
                 label Media
-                input.form-control(name="medias" type="file")
+                input.form-control(name="medias" type="file" required)
         .p-4.shadow.d-flex
             button.btn.btn-outline-dark Xem trước giao diện
-            button.btn.btn-danger.ms-auto Tiếp tục >
+            button.btn.btn-danger.ms-auto(type="submit") Tiếp tục >
+    script(src="/static/javascripts/address.js" type="text/javascript")

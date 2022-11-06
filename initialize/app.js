@@ -1,5 +1,4 @@
 const mainRoute = require("../routes/index");
-const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const express = require("express");
@@ -12,7 +11,7 @@ module.exports = () => {
 	app.use(express.urlencoded({ extended: true }));
 	app.use(cookieParser());
 	app.set("view engine", "pug");
-	app.use(express.static(path.join(__dirname, "public")));
+	app.use("/static", express.static("public"));
 	app.use("/", mainRoute);
 	app.listen(PORT, () =>
 		console.log(

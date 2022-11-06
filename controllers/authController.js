@@ -1,33 +1,53 @@
 const sequelize = require("../config/database");
 module.exports = {
 	loginView: async (req, res) => {
+		if (req.cookies.userID) return res.redirect("/");
 		res.render("auth/login");
 	},
-
+	login: async (req, res) => {
+		try {
+			const { username, password } = req.body;
+			const user = await sequelize.query(
+				"CALL sp_Login (:pr_username, :pr_password)",
+				{
+					replacements: {
+						pr_username: username,
+						pr_password: password,
+					},
+				}
+			);
+			res.cookie("userID", user[0].userid, {
+				// expires: new Date(Date.now() + 900000),
+			});
+			return res.redirect("/");
+		} catch (err) {
+			console.error(err);
+		}
+	},
 	registerView: async (req, res) => {
 		res.render("auth/register");
 	},
 	register: async (req, res) => {
-		const { Name, Username, Email, Password, Phone } = req.body;
-		
 		try {
+			const { name, username, password, email, phone, avatar } =
+				req.body;
+
 			const newUser = await sequelize.query(
-				"CALL sp_Register (:pr_username, :pr_password, :pr_name, :pr_email, :pr_phone, :pr_avatar)",
+				"CALL sp_Register (:pr_username, :pr_password, :pr_name, :pr_email, :pr_phone)",
 				{
 					replacements: {
-						pr_username: name,
-						pr_password: username,
-						pr_name: email,
-						pr_email: password,
+						pr_username: username,
+						pr_password: password,
+						pr_name: name,
+						pr_email: email,
 						pr_phone: phone,
-						pr_avatar: "",
 					},
 				}
 			);
 			console.log(newUser);
-			res.redirect("/");
+			res.redirect("/auth/login");
 		} catch (err) {
-			console.log(err);
+			console.error(err);
 		}
 	},
 };

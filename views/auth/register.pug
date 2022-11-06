@@ -4,23 +4,22 @@ block content
     form.d-flex.flex-column.gap-3(method="POST" action="/auth/register")
         .inputGroup
             label Họ và tên
-            input.form-control(name="name")
+            input.form-control(name="name" required)
         .inputGroup
             label Tên tài khoản
-            input.form-control(name="username")
+            input.form-control(name="username" required)
         .inputGroup
             label Địa chỉ email
-            input.form-control(name="email")
+            input.form-control(name="email" required)
         .inputGroup
             label Mật khẩu
-            input.form-control(name="password")
+            input.form-control(name="password" required)
         .inputGroup
             label Phone
-            input.form-control(name="phone")
+            input.form-control(name="phone" required)
         .inputGroup
             label Avatar
             input.form-control(type="file",name="avatar")       
         .d-flex.justify-content-center.gap-3
-            button(type="submit").btn.btn-dark Đăng nhập
-            a(href="/auth/register").text-decoration-none.fw-bold.mt-1 Đăng ký
+            button(type="submit").btn.btn-dark Đăng kí
     
