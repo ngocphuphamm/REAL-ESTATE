@@ -21,7 +21,7 @@ module.exports = {
 			});
 			return res.redirect("/");
 		} catch (err) {
-			console.error(err);
+			res.status(400).json({ message: err.message });
 		}
 	},
 	registerView: async (req, res) => {
@@ -47,7 +47,7 @@ module.exports = {
 			console.log(newUser);
 			res.redirect("/auth/login");
 		} catch (err) {
-			console.error(err);
+			res.status(400).json({ message: err.message });
 		}
 	},
 };

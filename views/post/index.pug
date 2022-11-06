@@ -33,7 +33,7 @@ block content
                 select.form-select(name="projectid" id="project")
             .inputGroup.col
                 label Địa chỉ hiển thị trên tin đăng
-                input.form-control(name="displayName" placeholder="Bạn có thể bổ sung hẻm,ngách,ngõ,...")
+                input.form-control(name="displayDistrict" placeholder="Bạn có thể bổ sung hẻm,ngách,ngõ,...")
         .p-5.shadow.d-flex.flex-column.gap-3
             h3 Thông tin bài viết
             .inputGroup
@@ -49,7 +49,7 @@ block content
                 input.form-control(name="area" placeholder="Nhập diện tích,VD:80" type="number" required)
             .inputGroup
                 label Mức giá
-                input.form-control(name="price" placeholder="Nhập giá,VD:1200000" required)
+                input.form-control(name="price" placeholder="Nhập giá,VD:1200000" required type="number")
             .inputGroup 
                 label Số phòng ngủ
                 input.form-control(name="bedroom" type="number" placeholder="VD: 4")
