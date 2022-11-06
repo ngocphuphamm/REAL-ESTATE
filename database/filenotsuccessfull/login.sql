@@ -13,7 +13,7 @@ BEGIN
     SELECT COUNT(*) INTO isExists FROM users u WHERE u.username=pr_username AND u.password=pw;
     
     IF(isExists >0) THEN
-        SELECT u.name,  u.username,
+        SELECT u.name,  u.username,u.userid,
 			   u.email, u.phone
         FROM users u
         where u.userid = private_key;

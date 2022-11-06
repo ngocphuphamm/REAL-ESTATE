@@ -12,16 +12,16 @@ call sp_Register("ngocphu","123","Pham Ngoc Phu","ngocphupham682001@gmail.com","
 
 call sp_Login("ngocphu", "123");
 
-call sp_postFeed("9962baad-5d3e-11ed-9637-c8b29b839518", "Đẹp quá", "quá đẹp",
+call sp_postFeed("ed52164b-5d9c-11ed-98ae-c8b29b839518", "Đẹp quá", "quá đẹp",
 				 "khong biet", 120.000,"20m2","123123","pr_Address"
-                 , 123.123, 123.12312, "7fb1b894-5d44-11ed-9637-c8b29b839518","12312"
+                 , 123.123, 123.12312, "3db03ff9-5d9d-11ed-98ae-c8b29b839518",NULL
                   , 1, 1, 1 
 				  ,1, 1, 1, 1, "direction", "pr_balconyDirection"
 				  ,"pr_furniture", 1);
+select * 
+from posts;
 
-
-		
-
+call sp_Report("4f811be5-5d9e-11ed-98ae-c8b29b839518","123123123","ngocphupham682001@gmail.com","asdasdádasdasdasdasdasdasdasdasdasd");
 
 
 

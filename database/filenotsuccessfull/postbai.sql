@@ -66,14 +66,6 @@ END; $$
 
 
 
-select * 
-from ward
-
-
-
-
-
-
 DELIMITER $$
 DROP PROCEDURE IF EXISTS sp_postFeed $$
 CREATE PROCEDURE sp_postFeed(pr_categoryid varchar(200), pr_title varchar(200), pr_description text
@@ -92,20 +84,16 @@ BEGIN
    
     
     SELECT COUNT(*) INTO isExists FROM categories c WHERE c.categoryid = pr_categoryid;
-	
+    
+	SET isCheckAddress = fnc_checkAddress(pr_provinceid, pr_districtid,
+											 pr_wardid, pr_streetid);
+                                             
     IF(isExists = 0) THEN
 		SELECT "Loại Bất Động Sản Không Có";
-	END IF;
-    
-    SET isCheckAddress = fnc_checkAddress(pr_provinceid, pr_districtid,
-											 pr_wardid, pr_streetid);
-    IF(isCheckAddress > 0) THEN
+	ELSEIF(isCheckAddress > 0) THEN
 		SELECT "Địa Chỉ Không Hợp Lệ";
-	END IF;
-	
-    
-    
-	INSERT INTO posts (reid, categoryid, title, description, displayDistrict, price, area, phone, address, lat, lng, userid, projectid, streetid, wardid, districtid, provinceid, bedroom, bathroom, floor, direction, balconyDirection, furniture, fontageArea)
+	ELSE
+		INSERT INTO posts (reid, categoryid, title, description, displayDistrict, price, area, phone, address, lat, lng, userid, projectid, streetid, wardid, districtid, provinceid, bedroom, bathroom, floor, direction, balconyDirection, furniture, fontageArea)
 		  VALUES (uuid(), pr_categoryid, pr_title, pr_description
 				, pr_displayDistrict, pr_price
                 , pr_area, pr_phone, pr_address 
@@ -113,7 +101,7 @@ BEGIN
                 , pr_projectid, pr_streetid, pr_wardid, pr_districtid
                 , pr_provinceid, pr_bedroom, pr_bathroom, pr_floor, pr_direction
                 , pr_balconyDirection, pr_furniture, pr_fontageArea);
-	SELECT 1;
-    
+		SELECT 1;
+	END IF; 
 END; $$
 
