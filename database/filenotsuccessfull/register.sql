@@ -18,23 +18,28 @@ BEGIN
 	DECLARE isExists int DEFAULT -1;
     DECLARE pw varchar(50);
     DECLARE privateKey text DEFAULT uuid();
-    SELECT COUNT(*) INTO isExists FROM users U WHERE U.username = pr_username ;
-    
-    IF (isExists>0) THEN
-    	SELECT 'Tài khoản đã tồn tại !';
-        #Với câu lệnh SELECT store procedure sẽ trả về dữ liệu và không chạy những lệnh sau đó
-    END IF;
-    
-	SET pw= fnc_SHAPassword(pr_password, privateKey);
-	
-    #Với table tbl_account có cấu trúc tbl_account(username varchar(50), password varchar(100), private_key varchar(50))
-	INSERT INTO USERS(userid ,name,username,email,password,phone)
-    VALUES (privateKey,pr_name,pr_username,pr_email,pw,pr_phone);
-    
-     IF(row_count()>0) THEN	
-     	SELECT 'Đã đăng ký thành công !'; #hoặc trả về user vừa được đăng ký
-     ELSE
-        SELECT 'SOMETHING WRONG !!!';
-     END IF;
-    
+
+	DECLARE exit handler FOR SQLEXCEPTION, SQLWARNING
+	BEGIN
+		ROLLBACK;
+		RESIGNAL;
+	END;
+
+    SELECT COUNT(*) INTO isExists
+    FROM users U
+	WHERE U.username = pr_username;
+	IF (isExists>0) THEN
+		SELECT 'Tài khoản đã tồn tại !';
+	ELSE
+		SET pw= fnc_SHAPassword(pr_password, privateKey);
+		SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+		START TRANSACTION;
+			INSERT INTO USERS(userid ,name,username,email,password,phone)
+			VALUES (privateKey,pr_name,pr_username,pr_email,pw,pr_phone);
+		COMMIT;
+        
+        SELECT 1 ;
+    END IF;    
 END; $$
+
+SELECT row_count()
