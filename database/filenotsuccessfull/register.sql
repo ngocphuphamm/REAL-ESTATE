@@ -34,8 +34,10 @@ BEGIN
 		SET pw= fnc_SHAPassword(pr_password, privateKey);
 		SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
 		START TRANSACTION;
+			SET SQL_SAFE_UPDATES = 0;
 			INSERT INTO USERS(userid ,name,username,email,password,phone)
 			VALUES (privateKey,pr_name,pr_username,pr_email,pw,pr_phone);
+            SET SQL_SAFE_UPDATES = 1;
 		COMMIT;
         
         SELECT 1 ;

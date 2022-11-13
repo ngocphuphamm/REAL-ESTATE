@@ -1,7 +1,7 @@
 
 DELIMITER $$
 DROP PROCEDURE IF EXISTS sp_Province_Posts $$
-CREATE PROCEDURE sp_Province_Posts(pr_province_id char(40)) 
+CREATE PROCEDURE sp_Province_Posts(pr_province_id INT)
 BEGIN	
     
 	DECLARE isExitsProvince INT DEFAULT -1 ;

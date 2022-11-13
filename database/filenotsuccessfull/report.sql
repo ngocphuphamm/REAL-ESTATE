@@ -40,9 +40,14 @@ BEGIN
     ELSEIF (isCheckReportUser > 0 ) THEN
 		SELECT "Người dùng đã gửi tố cáo";
 	ELSE
-		INSERT INTO report (reportid, reid, phone, email, contentrp)
-			  VALUES (uuid(),pr_reid,pr_phone,pr_email,pr_contentrp);
-		SELECT 1;
+    	SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+		START TRANSACTION;
+			SET SQL_SAFE_UPDATES = 0;
+			INSERT INTO report (reportid, reid, phone, email, contentrp)
+				  VALUES (uuid(),pr_reid,pr_phone,pr_email,pr_contentrp);
+			SET SQL_SAFE_UPDATES = 1;
+			SELECT 1;
+        COMMIT;
 	END IF;
 END; $$
 

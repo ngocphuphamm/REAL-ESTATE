@@ -95,6 +95,7 @@ BEGIN
 		set id_post = uuid();
         SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
         START TRANSACTION;
+			SET SQL_SAFE_UPDATES = 0;
 			INSERT INTO posts (reid, categoryid, title, description, price
 								, area, phone, address, userid, projectid
                                 , streetid, wardid, districtid, provinceid)
@@ -102,6 +103,7 @@ BEGIN
 					 , pr_price , pr_area, pr_phone, pr_address ,pr_userid
 					, pr_projectid, pr_streetid, pr_wardid, pr_districtid
 					, pr_provinceid);
+			SET SQL_SAFE_UPDATES = 1;
 		COMMIT;
 
 

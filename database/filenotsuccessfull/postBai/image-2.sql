@@ -23,8 +23,10 @@ BEGIN
 	ELSE
 		SET TRANSACTION ISOLATION LEVEL Repeatable read;
 		START TRANSACTION;
+			SET SQL_SAFE_UPDATES = 0;
 			INSERT INTO medias(mediaid ,url,reid)
 			VALUES (media_id,pr_url,pr_reid);
+            SET SQL_SAFE_UPDATES = 1;
 		COMMIT;
         SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
         SELECT 1;

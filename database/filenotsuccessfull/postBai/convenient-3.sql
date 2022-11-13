@@ -27,12 +27,14 @@ BEGIN
 	ELSE
 		SET TRANSACTION ISOLATION LEVEL Repeatable read;
 		START TRANSACTION;
+			SET SQL_SAFE_UPDATES = 0;
 			INSERT INTO convenient(convenientid, reid, bedroom, bathroom
 									, floor, direction
 									, balconyDirection, furniture, fontageArea)
 			VALUES (convenient_id,pr_reid , pr_bedroom , pr_bathroom , 
 					pr_floor , pr_direction , pr_balconyDirection ,
 					pr_furniture , pr_fontageArea );
+			SET SQL_SAFE_UPDATES = 1;
 		COMMIT;
         SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
         SELECT 1;
