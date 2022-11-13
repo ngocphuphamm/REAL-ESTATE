@@ -91,6 +91,13 @@ create table comment (
 	reid char(40) not null,
 	userid char(40) not null,
  primary key (commentid))ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+ 
+ create table savePosts (
+	savePostId char(40) not null,
+	createdat timestamp not null  default  current_timestamp,
+	reid char(40) not null,
+	userid char(40) not null,
+ primary key (savePostId))ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 create table report (
 	reportid char(40) not null,
@@ -154,6 +161,8 @@ alter table street add foreign key (districtid,provinceid) references district (
 alter table posts add foreign key (wardid,districtid,provinceid) references ward (wardid,districtid,provinceid) on delete  restrict on update  restrict;
 alter table posts add foreign key (projectid) references project (projectid) on delete  restrict on update  restrict;
 alter table posts add foreign key (streetid) references street (streetid) on delete  restrict on update  restrict;
+alter table savePosts add foreign key (reid) references posts (reid) on delete  restrict on update  restrict;
+alter table savePosts add foreign key (userid) references users (userid) on delete  restrict on update  restrict;
 
 
 /* users permissions */

@@ -40,7 +40,6 @@ BEGIN
     ELSEIF (isCheckReportUser > 0 ) THEN
 		SELECT "Người dùng đã gửi tố cáo";
 	ELSE
-    	SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
 		START TRANSACTION;
 			SET SQL_SAFE_UPDATES = 0;
 			INSERT INTO report (reportid, reid, phone, email, contentrp)
