@@ -6,35 +6,10 @@ block content
                 input.form-control.w-75(placeholder="VD: Vinhome Central Park")
                 button.btn.btn-dark.ms-3 Tìm kiếm
         .row.row-cols-4.gap-5 
-            .card(style='width: 18rem;').col
-                img.card-img-top(src='https://file4.batdongsan.com.vn/crop/257x147/2022/10/21/20221021165948-484b_wm.jpg' alt='...')
-                .card-body
-                    h5.card-title Bán căn hộ Midtown Phú Mỹ Hưng 129.11m2 3 PN view công
-                    p.card-text 
-                        p 12.7 tỷ 129.11 m2 
-                        p Quận 7,Hồ Chí Minh
-                    a.btn.btn-primary(href='#') Go somewhere
-            .card(style='width: 18rem;').col
-                img.card-img-top(src='https://file4.batdongsan.com.vn/crop/257x147/2022/10/21/20221021165948-484b_wm.jpg' alt='...')
-                .card-body
-                    h5.card-title Bán căn hộ Midtown Phú Mỹ Hưng 129.11m2 3 PN view công
-                    p.card-text 
-                        p 12.7 tỷ 129.11 m2 
-                        p Quận 7,Hồ Chí Minh
-                    a.btn.btn-primary(href='#') Go somewhere
-            .card(style='width: 18rem;').col
-                img.card-img-top(src='https://file4.batdongsan.com.vn/crop/257x147/2022/10/21/20221021165948-484b_wm.jpg' alt='...')
-                .card-body
-                    h5.card-title Bán căn hộ Midtown Phú Mỹ Hưng 129.11m2 3 PN view công
-                    p.card-text 
-                        p 12.7 tỷ 129.11 m2 
-                        p Quận 7,Hồ Chí Minh
-                    a.btn.btn-primary(href='#') Go somewhere
-            .card(style='width: 18rem;').col
-                img.card-img-top(src='https://file4.batdongsan.com.vn/crop/257x147/2022/10/21/20221021165948-484b_wm.jpg' alt='...')
-                .card-body
-                    h5.card-title Bán căn hộ Midtown Phú Mỹ Hưng 129.11m2 3 PN view công
-                    p.card-text 
-                        p 12.7 tỷ 129.11 m2 
-                        p Quận 7,Hồ Chí Minh
-                    i.fa-regular.fa-heart
+            each post in posts
+
+                .card(style='width: 18rem;').col
+                    img.card-img-top(src=posts[0].dataValues.medias[0].dataValues.url alt='...')
+                    .card-body
+                        h5.card-title= post.dataValues.title
+                        p.card-text= post.dataValues.description

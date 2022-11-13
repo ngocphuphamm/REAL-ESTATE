@@ -11,7 +11,7 @@ module.exports = () => {
 	app.use(express.urlencoded({ extended: true }));
 	app.use(cookieParser());
 	app.set("view engine", "pug");
-	app.use("/static", express.static("public"));
+	app.use("/public", express.static("public"));
 	app.use("/", mainRoute);
 	app.listen(PORT, () =>
 		console.log(

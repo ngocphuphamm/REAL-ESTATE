@@ -1,63 +1,63 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('comment', {
-    commentid: {
-      type: DataTypes.CHAR(40),
-      allowNull: false,
-      primaryKey: true
-    },
-    createdat: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
-    },
-    content: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    },
-    reid: {
-      type: DataTypes.CHAR(40),
-      allowNull: false,
-      references: {
-        model: 'posts',
-        key: 'reid'
-      }
-    },
-    userid: {
-      type: DataTypes.CHAR(40),
-      allowNull: false,
-      references: {
-        model: 'users',
-        key: 'userid'
-      }
-    }
-  }, {
-    sequelize,
-    tableName: 'comment',
-    timestamps: false,
-    indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "commentid" },
-        ]
-      },
-      {
-        name: "reid",
-        using: "BTREE",
-        fields: [
-          { name: "reid" },
-        ]
-      },
-      {
-        name: "userid",
-        using: "BTREE",
-        fields: [
-          { name: "userid" },
-        ]
-      },
-    ]
-  });
-};
+const { Sequelize, Model, DataTypes } = require("sequelize");
+const sequelize = require("../config/database");
+
+const Comments = sequelize.define(
+	"comment",
+	{
+		commentid: {
+			type: DataTypes.CHAR(40),
+			allowNull: false,
+			primaryKey: true,
+		},
+		createdat: {
+			type: DataTypes.DATE,
+			allowNull: false,
+			defaultValue: Sequelize.Sequelize.literal("CURRENT_TIMESTAMP"),
+		},
+		content: {
+			type: DataTypes.TEXT,
+			allowNull: false,
+		},
+		reid: {
+			type: DataTypes.CHAR(40),
+			allowNull: false,
+			references: {
+				model: "posts",
+				key: "reid",
+			},
+		},
+		userid: {
+			type: DataTypes.CHAR(40),
+			allowNull: false,
+			references: {
+				model: "users",
+				key: "userid",
+			},
+		},
+	},
+	{
+		sequelize,
+		tableName: "comment",
+		timestamps: false,
+		indexes: [
+			{
+				name: "PRIMARY",
+				unique: true,
+				using: "BTREE",
+				fields: [{ name: "commentid" }],
+			},
+			{
+				name: "reid",
+				using: "BTREE",
+				fields: [{ name: "reid" }],
+			},
+			{
+				name: "userid",
+				using: "BTREE",
+				fields: [{ name: "userid" }],
+			},
+		],
+	}
+);
+
+module.exports = Comments;
