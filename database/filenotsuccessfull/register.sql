@@ -19,20 +19,14 @@ BEGIN
     DECLARE pw varchar(50);
     DECLARE privateKey text DEFAULT uuid();
 
-	DECLARE exit handler FOR SQLEXCEPTION, SQLWARNING
-	BEGIN
-		ROLLBACK;
-		RESIGNAL;
-	END;
-
     SELECT COUNT(*) INTO isExists
     FROM users U
 	WHERE U.username = pr_username;
+    
 	IF (isExists>0) THEN
 		SELECT 'Tài khoản đã tồn tại !';
 	ELSE
 		SET pw= fnc_SHAPassword(pr_password, privateKey);
-		SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
 		START TRANSACTION;
 			SET SQL_SAFE_UPDATES = 0;
 			INSERT INTO USERS(userid ,name,username,email,password,phone)
@@ -43,5 +37,5 @@ BEGIN
         SELECT 1 ;
     END IF;    
 END; $$
+SELECT @TRA
 
-SELECT row_count()

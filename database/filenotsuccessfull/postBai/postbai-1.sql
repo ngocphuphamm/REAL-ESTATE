@@ -93,7 +93,6 @@ BEGIN
 		SELECT "Địa Chỉ Không Hợp Lệ";
 	ELSE
 		set id_post = uuid();
-        SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
         START TRANSACTION;
 			SET SQL_SAFE_UPDATES = 0;
 			INSERT INTO posts (reid, categoryid, title, description, price

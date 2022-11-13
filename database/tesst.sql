@@ -11,19 +11,21 @@ values (uuid(),"Ngọc Phú","ngocphupham","ngocphupham682001@gmail.com","123145
 ------
 call sp_Register("ngocphu","123","Pham Ngoc Phu","ngocphupham682001@gmail.com","123123");
 
-
+DELETE FROM USERS;
+SELECT *
+FROM USERS;
 
 
 ------
 call sp_Login("ngocphu", "123");
 
 ------
-call sp_postFeed("c673e15a-62ad-11ed-98ae-c8b29b839518", "pr_title", "pr_description"
+call sp_postFeed("de8fc3e9-6337-11ed-b1d9-00155d87afbf", "pr_title", "pr_description"
 				 , 120.000,"pr_area","pr_phone","pr_Address"
-                 , "04334e72-62b7-11ed-98ae-c8b29b839518",1
+                 , "d5ef3568-634c-11ed-b1d9-00155d87afbf",1
 				 , 1, 1, 1,1);
 SELECT *
-FROM POSTS;
+FROM USERS;
 
 ------
 CALL sp_insert_medias("7709e621-62bb-11ed-98ae-c8b29b839518","123123");
@@ -33,8 +35,8 @@ CALL sp_insert_medias("7709e621-62bb-11ed-98ae-c8b29b839518","123123");
 ------
 call sp_Report("4f811be5-5d9e-11ed-98ae-c8b29b839518","123123123","ngocphupham682001@gmail.com","asdasdádasdasdasdasdasdasdasdasdasd");
 
-
-
+--- 
+CALL sp_savePosts
 
 
 
@@ -63,6 +65,18 @@ SET SQL_SAFE_UPDATES = 1;
 CALL sp_Edit_User("04334e72-62b7-11ed-98ae-c8b29b839518","ngochu","123123");
 ------
 SELECT *
-FROM COMMENT
+FROM COMMENT;
+
+---
+SELECT * FROM users;
+select * from posts;
+SELECT * FROM COMMENT;
+CALL sp_Comment("02482973-6328-11ed-b1d9-00155d87afbf","04334e72-62b7-11ed-98ae-c8b29b839518","hấdddello");
+
+---
+SELECT * FROM POSTS;
+select *  from users;
+CALL sp_savePosts("77ebde3d-634d-11ed-b1d9-00155d87afbf","d5ef3568-634c-11ed-b1d9-00155d87afbf");
+--
 
 
