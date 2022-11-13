@@ -10,10 +10,10 @@ module.exports = {
 				categoryid,
 				title,
 				description,
-				displayDistrict,
 				price,
 				area,
 				address,
+				phone,
 				projectid,
 				streetid,
 				wardid,
@@ -32,30 +32,36 @@ module.exports = {
 				`SELECT * FROM users WHERE userid = '${userID}'`,
 				{ type: sequelize.QueryTypes.SELECT }
 			);
-
 			const newPost = await sequelize.query(
 				`CALL sp_postFeed (:pr_categoryid, :pr_title , :pr_description ,
-					 :pr_displayDistrict , :pr_price , :pr_area , :pr_phone , :pr_address , :pr_lat , :pr_lng , :pr_userid ,
-					  :pr_projectid , :pr_streetid , :pr_wardid , :pr_districtid , :pr_provinceid , :pr_bedroom , :pr_bathroom ,
-					  :pr_floor , :pr_direction , :pr_balconyDirection , :pr_furniture ,:pr_fontageArea)`,
+					  :pr_price , :pr_area , :pr_phone , :pr_address, :pr_userid ,
+					  :pr_projectid , :pr_streetid , :pr_wardid , :pr_districtid , :pr_provinceid)`,
 				{
 					replacements: {
 						pr_categoryid: categoryid,
 						pr_title: title,
 						pr_description: description,
-						pr_displayDistrict: displayDistrict,
 						pr_price: price,
 						pr_area: area,
-						pr_phone: user[0].phone,
+						pr_phone: phone,
 						pr_address: address,
-						pr_lat: 123,
-						pr_lng: 123,
 						pr_userid: user[0].userid,
 						pr_projectid: projectid,
 						pr_streetid: streetid,
 						pr_wardid: wardid,
 						pr_districtid: districtid,
 						pr_provinceid: provinceid,
+					},
+				}
+			);
+			console.log("POST", newPost[0].id_post);
+
+			await sequelize.query(
+				`CALL sp_insert_convenient (:pr_reid , :pr_bedroom , :pr_bathroom ,
+					  :pr_floor , :pr_direction , :pr_balconyDirection , :pr_furniture ,:pr_fontageArea)`,
+				{
+					replacements: {
+						pr_reid: newPost[0].id_post,
 						pr_bedroom: bedroom,
 						pr_bathroom: bathroom,
 						pr_floor: floor,
@@ -66,6 +72,20 @@ module.exports = {
 					},
 				}
 			);
+			if (req.files.length > 0) {
+				req.files.forEach(async (file) => {
+					await sequelize.query(
+						`CALL sp_insert_medias (:pr_reid, :pr_url)`,
+						{
+							replacements: {
+								pr_reid: newPost[0].id_post,
+								pr_url: file.path,
+							},
+						}
+					);
+				});
+			}
+
 			res.status(200).json({ success: true });
 		} catch (err) {
 			res.status(400).json({ message: err.message });

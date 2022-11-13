@@ -1,6 +1,6 @@
 extends ../common/layout.pug 
 block content
-    form.d-flex.flex-column.gap-3(method="POST" action="/user/post")
+    form.d-flex.flex-column.gap-3(method="POST" action="/user/post" enctype="multipart/form-data")
         .p-5.shadow.d-flex.flex-column.gap-3
             h3 Thông tin cơ bản
             .inputGroup
@@ -31,9 +31,9 @@ block content
             .inputGroup
                 label Dự án
                 select.form-select(name="projectid" id="project")
-            .inputGroup.col
-                label Địa chỉ hiển thị trên tin đăng
-                input.form-control(name="displayDistrict" placeholder="Bạn có thể bổ sung hẻm,ngách,ngõ,...")
+            .inputGroup
+                label Số điện thoại đăng tin
+                input.form-control(name="phone" required)
         .p-5.shadow.d-flex.flex-column.gap-3
             h3 Thông tin bài viết
             .inputGroup
@@ -95,7 +95,7 @@ block content
             h3 Hình ảnh & Video
             .inputGroup
                 label Media
-                input.form-control(name="medias" type="file" required)
+                input.form-control(name="medias" type="file" required multiple)
         .p-4.shadow.d-flex
             button.btn.btn-outline-dark Xem trước giao diện
             button.btn.btn-danger.ms-auto(type="submit") Tiếp tục >
