@@ -13,9 +13,6 @@ BEGIN
 	WHERE s.reid = pr_reid AND s.userid = pr_userid;
     
 	IF (isExists>0) THEN
-<<<<<<< HEAD
-		SELECT savePost_id,0;
-=======
 		SELECT savePostId  into savePost_id_exists
         FROM saveposts
         WHERE s.reid = pr_reid AND s.userid = pr_userid;
@@ -29,7 +26,6 @@ BEGIN
         SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
         
         SELECT savePost_id_exists,0;
->>>>>>> 2edc836abcf3cc13fa755a5334be184a90714661
 	ELSE
 		START TRANSACTION;
 			SET SQL_SAFE_UPDATES = 0;

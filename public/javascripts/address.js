@@ -13,7 +13,7 @@ const fetchCategories = async () => {
 const fetchInit = async () => {
 	const res = await fetch(`/address/provinces`);
 	const data = await res.json();
-	render(data);
+	renderAddress(data);
 };
 const fetchDistrict = async (id) => {
 	const res = await fetch(`/address/districts/?provinceID=${id}}`);
@@ -61,7 +61,7 @@ const renderCategory = async (data) => {
 		);
 	}
 };
-const render = async (data) => {
+const renderAddress = async (data) => {
 	for (let item of data) {
 		city.options[city.options.length] = new Option(
 			item.nameprovince,
