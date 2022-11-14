@@ -28,3 +28,5 @@ const Categories = sequelize.define(
 		],
 	}
 );
+
+module.exports = Categories;

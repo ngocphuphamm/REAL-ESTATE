@@ -1,11 +1,12 @@
 const { Sequelize, Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
-const { Posts, Medias } = require("../models/posts");
+const Posts = require("../models/posts");
+const Medias = require("../models/medias");
 module.exports = {
 	getHome: async (req, res) => {
 		try {
 			const posts = await Posts.findAll({
-				include: [{ model: Medias, as: "medias" }],
+				include: Medias,
 			});
 			res.render("home/index", { posts });
 		} catch (err) {

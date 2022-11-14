@@ -12,7 +12,7 @@ BEGIN
 	WHERE s.reid = pr_reid AND s.userid = pr_userid;
     
 	IF (isExists>0) THEN
-		SELECT 'Đã lưu tin này !';
+		SELECT savePost_id,0;
 	ELSE
 		START TRANSACTION;
 			SET SQL_SAFE_UPDATES = 0;

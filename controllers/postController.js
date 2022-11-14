@@ -1,5 +1,5 @@
 const sequelize = require("../config/database");
-
+const moment = require("moment");
 module.exports = {
 	postView: async (req, res) => {
 		res.render("post/index");
@@ -91,5 +91,72 @@ module.exports = {
 			res.status(400).json({ message: err.message });
 		}
 	},
-	postDetail: async (req, res) => {},
+	detail: async (req, res) => {
+		try {
+			const { id } = req.params;
+			const convenients = await sequelize.query(
+				"CALL sp_get_convenient(:pr_reid)",
+				{
+					replacements: {
+						pr_reid: id,
+					},
+				}
+			);
+			const detail = await sequelize.query(
+				"CALL sp_show_detail_info(:pr_reid)",
+				{
+					replacements: {
+						pr_reid: id,
+					},
+				}
+			);
+			const medias = await sequelize.query(
+				"CALL sp_get_listMedias(:pr_reid)",
+				{
+					replacements: {
+						pr_reid: id,
+					},
+				}
+			);
+			const post = {
+				convenients: convenients[0],
+				detail: detail[0],
+				medias,
+			};
+			res.render("post/detail", {
+				post,
+				moment,
+			});
+		} catch (err) {
+			res.status(400).json({ message: err.message });
+		}
+	},
+	sendBookMark: async (req, res) => {
+		try {
+			const { reid, userid } = req.body;
+			const sendBookmark = await sequelize.query(
+				"CALL sp_savePosts(:pr_reid , :pr_userid)",
+				{
+					replacements: {
+						pr_reid: reid,
+						pr_userid: userid,
+					},
+				}
+			);
+			if (sendBookmark[0]["0"] === 0) {
+				const cancelBookmark = await sequelize.query(
+					"CALL sp_cancel_savePost(:pr_savepost_id)",
+					{
+						replacements: {
+							pr_savepost_id: sendBookmark[0].savePost_id,
+						},
+					}
+				);
+				console.log(cancelBookmark);
+			}
+			res.status(200).json(sendBookmark);
+		} catch (err) {
+			res.status(400).json({ message: err.message });
+		}
+	},
 };

@@ -1,0 +1,103 @@
+extends ../common/layout.pug 
+block content
+    link(rel="stylesheet" href="/public/stylesheets/carousel.css")
+    .row
+        .col.d-flex.flex-column.gap-3
+            #carouselExampleControls.carousel.slide.rounded.shadow.mb-3(data-bs-ride='carousel')
+                .carousel-indicators
+                    button.active(type='button' data-bs-target='#carouselExampleIndicators' data-bs-slide-to='0' aria-current='true' aria-label='Slide 1')
+                    button(type='button' data-bs-target='#carouselExampleIndicators' data-bs-slide-to='1' aria-label='Slide 2')
+                    button(type='button' data-bs-target='#carouselExampleIndicators' data-bs-slide-to='2' aria-label='Slide 3')
+                .carousel-inner
+                    .carousel-item.active
+                        img.d-block.w-100(src='https://rentapartment.vn/wp-content/uploads/2021/03/Real-estate-la-gi.jpg' alt="")
+                    .carousel-item
+                        img.d-block.w-100(src='https://rentapartment.vn/wp-content/uploads/2021/03/Real-estate-la-gi.jpg' alt="")
+                    .carousel-item
+                        img.d-block.w-100(src='https://rentapartment.vn/wp-content/uploads/2021/03/Real-estate-la-gi.jpg' alt="")
+                button.carousel-control-prev(type='button' data-bs-target='#carouselExampleControls' data-bs-slide='prev')
+                    span.carousel-control-prev-icon(aria-hidden='true')
+                    span.visually-hidden Previous
+                button.carousel-control-next(type='button' data-bs-target='#carouselExampleControls' data-bs-slide='next')
+                    span.carousel-control-next-icon(aria-hidden='true')
+                    span.visually-hidden Next
+            .d-flex.flex-column.gap-2
+                h4=post.detail.title
+                div=post.detail.description
+                hr
+                .d-flex.gap-5
+                    .d-flex.flex-column
+                        div.fw-light.fs-5 Mức giá
+                        div.fw-bold=post.detail.price
+                    .d-flex.flex-column
+                        div.fw-light.fs-5 Diện tích
+                        div.fw-bold=post.detail.area+ ' m²'
+                    .d-flex.flex-column
+                        div.fw-light.fs-5 Phòng ngủ
+                        div.fw-bold=post.convenients.bedroom+ " PN"
+                    .d-flex.ms-auto.gap-2
+                        i.fa.fa-thin.fa-share-nodes.fa-lg
+                        i.fa.fa-thin.fa-triangle-exclamation.fa-lg
+                        i.fa.fa-thin.fa-heart.fa-lg#bookmark
+                hr
+            .d-flex.flex-column.gap-4
+                div 
+                    h5 Thông tin mô tả
+                    div=post.detail.description
+                div
+                    h5 Đặc điểm bất động sản
+                    span Loại tin đăng: 
+                    span= post.detail.categories
+                .row
+                    .col
+                        .d-flex.gap-1
+                            i.fa.fa-thin.fa-chart-area
+                            div Diện tích 
+                    .col
+                        div.fw-light=post.detail.area
+                    .col
+                        .d-flex.gap-1
+                            i.fa.fa-thin.fa-chart-area
+                            div Mức giá
+                    .col
+                        div.fw-light=post.detail.price
+                .row
+                    .col
+                        .d-flex.gap-1
+                            i.fa.fa-thin.fa-chart-area
+                            div Số phòng ngủ
+                    .col
+                        div.fw-light=post.convenients.bedroom
+                    .col
+                        .d-flex.gap-1
+                            i.fa.fa-thin.fa-chart-area
+                            div Số toilet
+                    .col
+                        div.fw-light=post.convenients.bathroom
+                .row
+                    .col-3
+                        .d-flex.gap-1
+                            i.fa.fa-thin.fa-chart-area
+                            div Nội thất
+                    .col-3
+                        div.fw-light=post.convenients.furniture
+            .d-flex.flex-column.gap-3
+                h5 Thông tin dự án
+                .card.mb-3.w-100
+                    .row.g-0
+                        .col-md-4
+                            img.img-fluid.rounded-start.w-100(src='https://file4.batdongsan.com.vn/crop/345x200/2017/10/17/0I4XNtd4/20171017111534-d72d.jpg' alt='...')
+                        .col-md-8
+                            .card-body
+                                h5.card-title=post.detail.nameproject
+                                p.card-text Chủ đầu tư Đang cập nhật
+            hr
+            .d-flex.gap-5
+                .d-flex.flex-column
+                    div.fw-light Ngày đăng 
+                    div.fw-bold=moment(post.detail.createdat).format("DD/MM/YY")
+            hr 
+            .d-flex.flex-column.gap-3 
+                h5 Bất động sản dành cho bạn
+        .col-3
+    script(type="text/javascript" src="/public/javascripts/detail.js")

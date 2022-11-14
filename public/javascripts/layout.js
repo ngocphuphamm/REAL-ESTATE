@@ -29,7 +29,7 @@ const render = async () => {
 			<div class="d-flex align-items-center gap-3">
 				<a href="/auth/login" class="text-dark text-decoration-none">Đăng nhập</a>
 				<a href="/auth/register" class="text-dark text-decoration-none">Đăng ký</a>
-				<a href="/auth/user/post" class="btn btn-outline-dark">Đăng tin</a>
+				<a href="/post" class="btn btn-outline-dark">Đăng tin</a>
 			</div>
             `
 		);
@@ -43,7 +43,7 @@ const render = async () => {
 				<i class="fa-solid fa-circle-user fa-lg"></i>
         	    <div>${data.body.name}</div>
 			</div>
-			<a class="btn btn-outline-dark" href="/auth/user/post">Đăng tin</a>
+			<a class="btn btn-outline-dark" href="/post">Đăng tin</a>
         </div>
         `
 	);
