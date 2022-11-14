@@ -6,7 +6,9 @@ DELETE FROM users;
 delete from users u where u.username = "ngocphupham";
 
 INSERT INTO  USERS(userid ,name,username,email,password,typeuser,phone,avatar,status) 
-values (uuid(),"Ngọc Phú","ngocphupham","ngocphupham682001@gmail.com","123145",0,"0909603123","asdaasdasdasdasdasdasdasdsd",0);
+values (uuid(),"Ngọc Phú","ngocphupham",
+		"ngocphupham682001@gmail.com","123145",0,"0909603123"
+        ,"asdaasdasdasdasdasdasdasdsd",0);
 
 ------
 call sp_Register("ngocphu","123","Pham Ngoc Phu","ngocphupham682001@gmail.com","123123");
@@ -84,13 +86,12 @@ select @@transaction_isolation;
 --
 CALL sp_show_detail_info("77ebde3d-634d-11ed-b1d9-00155d87afbf");
 insert medias (mediaid,url,reid)
-	values(uuid(),"hello","77ebde3d-634d-11ed-b1d9-00155d87afbf");
+	  values(uuid(),"hello","77ebde3d-634d-11ed-b1d9-00155d87afbf");
 CALL sp_get_listMedias("77ebde3d-634d-11ed-b1d9-00155d87afbf");
 CALL sp_get_convenient("77ebde3d-634d-11ed-b1d9-00155d87afbf");
 INSERT INTO convenient (convenientid, reid, bedroom, bathroom, floor, direction, balconyDirection, furniture, fontageArea)
-		values (uuid(),"77ebde3d-634d-11ed-b1d9-00155d87afbf",1,1,1,"direction"
-						,"balconyDirection","furniture",121);
+		values (uuid(),"77ebde3d-634d-11ed-b1d9-00155d87afbf",1,1,1,"direction","balconyDirection","furniture",121);
+------
+CALL sp_get_listPosts("ÁD");
+------
 
---------
-select *
-from convenient
