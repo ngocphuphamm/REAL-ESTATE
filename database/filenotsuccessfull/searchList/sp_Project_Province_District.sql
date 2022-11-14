@@ -18,7 +18,8 @@ BEGIN
 		SELECT "Hiện không có nhà đất nào tại đây";
 	ELSE
 		SELECT *
-		FROM posts p 
+		FROM posts p join medias m
+					on m.reid = p.reid
 		WHERE  p.projectid = pr_project_id AND p.provinceid = pr_province_id
 			   AND p.districtid = pr_district_id;
 	END IF ;

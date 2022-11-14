@@ -28,6 +28,7 @@ BEGIN
 							, p.address, p.rented, p.createdat
 							, c.name as 'categories', pr.nameprovince
 							, dis.namedistrict, w.nameward,st.namestreet as 'street'
+                            , u.name, u.email, u.phone
 					 FROM posts p JOIN users u 
 								  ON u.userid = p.userid 
 								  JOIN categories c 
@@ -56,7 +57,7 @@ BEGIN
 							, p.address, p.rented, p.createdat
 							, c.name as 'categories', pr.nameprovince
 							, dis.namedistrict, w.nameward,st.namestreet as 'street'
-                            , pro.nameproject
+                            , pro.nameproject ,u.name, u.email, u.phone
 					 FROM posts p JOIN users u 
 								  ON u.userid = p.userid 
 								  JOIN categories c 

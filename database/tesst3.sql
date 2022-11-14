@@ -92,6 +92,6 @@ CALL sp_get_convenient("77ebde3d-634d-11ed-b1d9-00155d87afbf");
 INSERT INTO convenient (convenientid, reid, bedroom, bathroom, floor, direction, balconyDirection, furniture, fontageArea)
 		values (uuid(),"77ebde3d-634d-11ed-b1d9-00155d87afbf",1,1,1,"direction","balconyDirection","furniture",121);
 ------
-CALL sp_get_listPosts("ÁD");
-------
+
+
 
