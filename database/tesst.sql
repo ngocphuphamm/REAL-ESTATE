@@ -22,7 +22,7 @@ call sp_Login("ngocphu", "123");
 ------
 call sp_postFeed("de8fc3e9-6337-11ed-b1d9-00155d87afbf", "pr_title", "pr_description"
 				 , 120.000,"pr_area","pr_phone","pr_Address"
-                 , "d5ef3568-634c-11ed-b1d9-00155d87afbf",1
+                 , "d5ef3568-634c-11ed-b1d9-00155d87afbf",null
 				 , 1, 1, 1,1);
 SELECT *
 FROM USERS;
@@ -36,7 +36,7 @@ CALL sp_insert_medias("7709e621-62bb-11ed-98ae-c8b29b839518","123123");
 call sp_Report("4f811be5-5d9e-11ed-98ae-c8b29b839518","123123123","ngocphupham682001@gmail.com","asdasdádasdasdasdasdasdasdasdasdasd");
 
 --- 
-CALL sp_savePosts
+CALL sp_savePosts();
 
 
 
@@ -78,5 +78,19 @@ SELECT * FROM POSTS;
 select *  from users;
 CALL sp_savePosts("77ebde3d-634d-11ed-b1d9-00155d87afbf","d5ef3568-634c-11ed-b1d9-00155d87afbf");
 --
+select * from saveposts;
+call sp_cancel_savePost("9060cdb0-634d-11ed-b1d9-00155d87afbf");
+select @@transaction_isolation;
+--
+CALL sp_show_detail_info("77ebde3d-634d-11ed-b1d9-00155d87afbf");
+insert medias (mediaid,url,reid)
+	values(uuid(),"hello","77ebde3d-634d-11ed-b1d9-00155d87afbf");
+CALL sp_get_listMedias("77ebde3d-634d-11ed-b1d9-00155d87afbf");
+CALL sp_get_convenient("77ebde3d-634d-11ed-b1d9-00155d87afbf");
+INSERT INTO convenient (convenientid, reid, bedroom, bathroom, floor, direction, balconyDirection, furniture, fontageArea)
+		values (uuid(),"77ebde3d-634d-11ed-b1d9-00155d87afbf",1,1,1,"direction"
+						,"balconyDirection","furniture",121);
 
-
+--------
+select *
+from convenient
