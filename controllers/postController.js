@@ -2,6 +2,7 @@ const sequelize = require("../config/database");
 const moment = require("moment");
 const Comments = require("../models/comment");
 const Posts = require("../models/posts");
+const Users = require("../models/users");
 module.exports = {
 	postView: async (req, res) => {
 		res.render("post/index");
@@ -126,9 +127,7 @@ module.exports = {
 				medias,
 			};
 			const comments = await Comments.findAll({
-				where: {
-					reid: id,
-				},
+				include: Users,
 			});
 			res.render("post/detail", {
 				post,
@@ -170,7 +169,6 @@ module.exports = {
 					},
 				}
 			);
-			console.log(sendComment);
 			res.status(200).json(sendComment);
 		} catch (err) {
 			res.status(400).json({ message: err.message });

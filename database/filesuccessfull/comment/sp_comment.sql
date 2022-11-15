@@ -28,13 +28,13 @@ BEGIN
     WHERE c.reid = pr_reid AND c.userid = pr_userid;
     
     IF (isExistsRe <= 0) THEN
-			SELECT 'Nhà đất không có để comment !';
+			SELECT 'Nhà đất không có để comment !' , 0;
 		ELSEIF (isExistsUser <= 0)  THEN
-			SELECT 'Người dùng không tồn tại trong hệ thống!';
+			SELECT 'Người dùng không tồn tại trong hệ thống!' , 0;
 		ELSEIF (contentLen < 10) THEN
-			SELECT 'Nội dung comment không phù  hợp';
-		ELSEIF (isExistsComment > 1) THEN
-			SELECT 'Bạn đã comment tại bài đăng này';
+			SELECT 'Nội dung comment không phù  hợp' , 0;
+		ELSEIF (isExistsComment > 0) THEN
+			SELECT 'Bạn đã comment tại bài đăng này', 0;
         ELSE
 			START TRANSACTION;
 				SET SQL_SAFE_UPDATES = 0;
@@ -43,9 +43,10 @@ BEGIN
 				SET SQL_SAFE_UPDATES = 1;
 			COMMIT;
         
-			SELECT *
+			SELECT c.content, u.name , u.userid , 1
 			FROM comment c 
-			WHERE  c.commentid = comment_id;
+			JOIN users u ON c.userid = u.userid
+			WHERE c.commentid = comment_id;
     END IF;    
 END; $$
 

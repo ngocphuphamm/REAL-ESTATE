@@ -2,11 +2,11 @@ const bookmark = $("#bookmark");
 const addCommentBtn = $("#add-comment-btn");
 const commentContent = $("#comment-content");
 const commentSection = $("#comment-section");
-let reid, userid, swal;
+let reid, userid, toast;
 $(document).ready(() => {
 	reid = window.location.pathname.replace("/post/", "");
 	userid = getCookie("userID");
-	swal = Swal;
+	toast = Toast;
 });
 
 const sendBookMark = async () => {
@@ -20,7 +20,14 @@ const sendBookMark = async () => {
 		body: JSON.stringify({ userid, reid }),
 	});
 	const data = await res.json();
-	return data;
+	if (data[0].savePost_id_exists) {
+		return Toast.fire({ title: "Bạn đã hủy lưu tin", icon: "warning" });
+	} else {
+		return Toast.fire({
+			title: "Bạn đã lưu tin thành công",
+			icon: "success",
+		});
+	}
 };
 const addComment = async (body) => {
 	const res = await fetch(`/post/${reid}/comment`, {
@@ -31,7 +38,13 @@ const addComment = async (body) => {
 		body: JSON.stringify(body),
 	});
 	const data = await res.json();
-	if (!data) return;
+	if (data[0][0] === 0) {
+		Toast.fire({
+			title: "Bạn đã bình luận bài post này",
+			icon: "warning",
+		});
+		return commentContent.val("");
+	}
 	window.location.reload();
 	return data;
 };

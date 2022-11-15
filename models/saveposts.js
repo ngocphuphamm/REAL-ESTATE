@@ -1,12 +1,12 @@
 const { Sequelize, Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
-const Users = require("./users");
+const Posts = require("./posts");
 
-const Comments = sequelize.define(
-	"comment",
+const SavePosts = sequelize.define(
+	"saveposts",
 	{
-		commentid: {
-			type: DataTypes.CHAR(40),
+		savePostId: {
+			type: DataTypes.INTEGER,
 			allowNull: false,
 			primaryKey: true,
 		},
@@ -14,10 +14,6 @@ const Comments = sequelize.define(
 			type: DataTypes.DATE,
 			allowNull: false,
 			defaultValue: Sequelize.Sequelize.literal("CURRENT_TIMESTAMP"),
-		},
-		content: {
-			type: DataTypes.TEXT,
-			allowNull: false,
 		},
 		reid: {
 			type: DataTypes.CHAR(40),
@@ -38,14 +34,14 @@ const Comments = sequelize.define(
 	},
 	{
 		sequelize,
-		tableName: "comment",
+		tableName: "saveposts",
 		timestamps: false,
 		indexes: [
 			{
 				name: "PRIMARY",
 				unique: true,
 				using: "BTREE",
-				fields: [{ name: "commentid" }],
+				fields: [{ name: "streetid" }],
 			},
 			{
 				name: "reid",
@@ -60,5 +56,5 @@ const Comments = sequelize.define(
 		],
 	}
 );
-Comments.belongsTo(Users, { foreignKey: "userid" });
-module.exports = Comments;
+SavePosts.belongsTo(Posts, { foreignKey: "reid" });
+module.exports = SavePosts;

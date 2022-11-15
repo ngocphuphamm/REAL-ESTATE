@@ -1,10 +1,22 @@
 const authArea = $("#authArea");
 
 const fetchUser = async (userID) => {
-	const res = await fetch(`/auth/user/${userID}`);
+	const res = await fetch(`/user/${userID}`);
 	const data = await res.json();
 	return data;
 };
+const Toast = Swal.mixin({
+	toast: true,
+	position: "bottom-end",
+	showConfirmButton: false,
+	timer: 3000,
+	timerProgressBar: true,
+	didOpen: (toast) => {
+		toast.addEventListener("mouseenter", Swal.stopTimer);
+		toast.addEventListener("mouseleave", Swal.resumeTimer);
+	},
+});
+
 const getCookie = (cname) => {
 	let name = cname + "=";
 	let decodedCookie = decodeURIComponent(document.cookie);
@@ -38,17 +50,19 @@ const renderAuth = async () => {
 
 	authArea.html(
 		`
-        <div class="d-flex gap-3 align-items-center" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-html="true" data-bs-content="<a href='/auth/logout' class='text-decoration-none'>Log out</a>">
-			<div id="popover-area" class="d-flex gap-1 align-items-center">
-				<i class="fa-solid fa-circle-user fa-lg"></i>
-        	    <div>${data.body.name}</div>
-			</div>
-			<a class="btn btn-outline-dark" href="/post">Đăng tin</a>
-        </div>
+			
+        	<div class="d-flex gap-3 align-items-center dropdown">
+				<ul class="dropdown-menu">
+					<li><a class="dropdown-item" href="/user/post/bookmark">Tin đã lưu</a></li>
+					<li><a class="dropdown-item" href="/auth/logout">Đăng xuất</a></li>
+				</ul>
+				<div class="d-flex gap-1 align-items-center dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
+					<i class="fa-solid fa-circle-user fa-lg"></i>
+					<div>${data.body.name}</div>
+				</div>
+				<a class="btn btn-outline-dark" href="/post">Đăng tin</a>
+        	</div>
         `
-	);
-	$("#popover-area").click(() =>
-		$(`[data-bs-toggle="popover"]`).popover("toggle")
 	);
 };
 renderAuth();
