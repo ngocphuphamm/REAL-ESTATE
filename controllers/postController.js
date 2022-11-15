@@ -143,17 +143,6 @@ module.exports = {
 					},
 				}
 			);
-			if (sendBookmark[0]["0"] === 0) {
-				const cancelBookmark = await sequelize.query(
-					"CALL sp_cancel_savePost(:pr_savepost_id)",
-					{
-						replacements: {
-							pr_savepost_id: sendBookmark[0].savePost_id,
-						},
-					}
-				);
-				console.log(cancelBookmark);
-			}
 			res.status(200).json(sendBookmark);
 		} catch (err) {
 			res.status(400).json({ message: err.message });

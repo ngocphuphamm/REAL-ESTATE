@@ -1,4 +1,4 @@
-select * 
+sp_savePostsselect * 
 from saveposts 
 
 DELIMITER $$
@@ -14,12 +14,12 @@ BEGIN
     
 	IF (isExists>0) THEN
 		SELECT savePostId  into savePost_id_exists
-        FROM saveposts
+        FROM saveposts s
         WHERE s.reid = pr_reid AND s.userid = pr_userid;
 		SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 		START TRANSACTION;
 			SET SQL_SAFE_UPDATES = 0;
-				DELETE FROM saveposts 
+				DELETE FROM saveposts s 
 				WHERE s.reid = pr_reid AND s.userid = pr_userid;
             SET SQL_SAFE_UPDATES = 1;
 		COMMIT;
