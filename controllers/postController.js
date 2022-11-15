@@ -1,5 +1,7 @@
 const sequelize = require("../config/database");
 const moment = require("moment");
+const Comments = require("../models/comment");
+const Posts = require("../models/posts");
 module.exports = {
 	postView: async (req, res) => {
 		res.render("post/index");
@@ -123,9 +125,15 @@ module.exports = {
 				detail: detail[0],
 				medias,
 			};
+			const comments = await Comments.findAll({
+				where: {
+					reid: id,
+				},
+			});
 			res.render("post/detail", {
 				post,
 				moment,
+				comments,
 			});
 		} catch (err) {
 			res.status(400).json({ message: err.message });
@@ -144,6 +152,26 @@ module.exports = {
 				}
 			);
 			res.status(200).json(sendBookmark);
+		} catch (err) {
+			res.status(400).json({ message: err.message });
+		}
+	},
+	addComment: async (req, res) => {
+		try {
+			const { id } = req.params;
+			const { userid, content } = req.body;
+			const sendComment = await sequelize.query(
+				"CALL sp_Comment(:pr_reid , :pr_userid , :pr_content)",
+				{
+					replacements: {
+						pr_reid: id,
+						pr_userid: userid,
+						pr_content: content,
+					},
+				}
+			);
+			console.log(sendComment);
+			res.status(200).json(sendComment);
 		} catch (err) {
 			res.status(400).json({ message: err.message });
 		}

@@ -1,5 +1,6 @@
 const { Sequelize, Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
+const Posts = require("./posts");
 
 const Comments = sequelize.define(
 	"comment",
@@ -59,5 +60,4 @@ const Comments = sequelize.define(
 		],
 	}
 );
-
 module.exports = Comments;

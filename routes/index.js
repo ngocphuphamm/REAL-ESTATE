@@ -18,5 +18,5 @@ router.use("/user", validateToken, userRoute);
 // GET admin routes
 router.use("/admin", adminRoute);
 // GET post routes
-router.use("/post", postRoute);
+router.use("/post", validateToken, postRoute);
 module.exports = router;

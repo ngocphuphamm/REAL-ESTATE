@@ -99,5 +99,17 @@ block content
             hr 
             .d-flex.flex-column.gap-3 
                 h5 Bất động sản dành cho bạn
+            .d-flex.flex-column.gap-3
+                div
+                .d-flex.flex-column.gap-3
+                    h5 Bình luận
+                    textarea.form-control#comment-content
+                    button.btn.btn-outline-dark.ms-auto#add-comment-btn.ms-auto Thêm bình luận
+                if(comments.length > 0)
+                    each comment in comments
+                        .p-3.d-flex.gap-3.align-items-center
+                            img.rounded-circle(src="https://picsum.photos/80" alt="avatar")
+                            div.fw-bold=comment.dataValues.userid 
+                            div=comment.dataValues.content
         .col-3
     script(type="text/javascript" src="/public/javascripts/detail.js")

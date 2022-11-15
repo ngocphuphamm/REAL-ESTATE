@@ -21,7 +21,7 @@ const getCookie = (cname) => {
 	return "";
 };
 
-const render = async () => {
+const renderAuth = async () => {
 	const cookie = getCookie("userID");
 	if (!cookie) {
 		return authArea.html(
@@ -51,4 +51,4 @@ const render = async () => {
 		$(`[data-bs-toggle="popover"]`).popover("toggle")
 	);
 };
-render();
+renderAuth();
