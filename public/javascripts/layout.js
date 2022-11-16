@@ -50,10 +50,11 @@ const renderAuth = async () => {
 
 	authArea.html(
 		`
-			
         	<div class="d-flex gap-3 align-items-center dropdown">
 				<ul class="dropdown-menu">
-					<li><a class="dropdown-item" href="/user/post/bookmark">Tin đã lưu</a></li>
+					<li><a class="dropdown-item" href="/user/${getCookie(
+						"userID"
+					)}/bookmark">Tin đã lưu</a></li>
 					<li><a class="dropdown-item" href="/auth/logout">Đăng xuất</a></li>
 				</ul>
 				<div class="d-flex gap-1 align-items-center dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" >

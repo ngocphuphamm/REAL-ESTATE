@@ -7,9 +7,9 @@ block content
                 button.btn.btn-dark.ms-3 Tìm kiếm
         .row.row-cols-4.gap-5 
             each post in posts
-
                 .card(style='width: 18rem;').col
-                    img.card-img-top(src=posts[0].dataValues.medias[0].dataValues.url alt='...')
+                    if(post.dataValues.medias.length)
+                        img.card-img-top(src=post.dataValues.medias[0].dataValues.url alt='...')
                     .card-body
                         h5.card-title= post.dataValues.title
                         p.card-text= post.dataValues.description

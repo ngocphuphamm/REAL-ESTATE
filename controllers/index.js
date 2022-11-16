@@ -1,10 +1,10 @@
-const homeController = require("./HomeController");
+const siteController = require("./SiteController");
 const authController = require("./AuthController");
 const postController = require("./PostController");
 const addressController = require("./addressController");
 const userController = require("./userController");
 module.exports = {
-	homeController,
+	siteController,
 	authController,
 	postController,
 	addressController,

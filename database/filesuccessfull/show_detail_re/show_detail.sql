@@ -23,7 +23,7 @@ BEGIN
 			SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 			START TRANSACTION;
 				SET SQL_SAFE_UPDATES = 0;
-						SELECT p.title, p.description, p.price
+						SELECT p.reid, p.title, p.description, p.price
 							, p.area, p.viewCount, p.phone
 							, p.address, p.rented, p.createdat
 							, c.name as 'categories', pr.nameprovince
@@ -52,7 +52,7 @@ BEGIN
 			SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 			START TRANSACTION;
 				SET SQL_SAFE_UPDATES = 0;
-						SELECT p.title, p.description, p.price
+						SELECT p.reid, p.title, p.description, p.price
 							, p.area, p.viewCount, p.phone
 							, p.address, p.rented, p.createdat
 							, c.name as 'categories', pr.nameprovince

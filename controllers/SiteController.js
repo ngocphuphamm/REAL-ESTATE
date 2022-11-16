@@ -1,9 +1,7 @@
-const { Sequelize, Model, DataTypes } = require("sequelize");
-const sequelize = require("../config/database");
 const Posts = require("../models/posts");
 const Medias = require("../models/medias");
 module.exports = {
-	getHome: async (req, res) => {
+	home: async (req, res) => {
 		try {
 			const posts = await Posts.findAll({
 				include: Medias,
@@ -12,5 +10,9 @@ module.exports = {
 		} catch (err) {
 			res.status(400).json({ message: err.message });
 		}
+	},
+	error: async (req, res) => {
+		const error = "There is no error";
+		res.render("error/index", { error: error });
 	},
 };

@@ -4,12 +4,11 @@ const adminRoute = require("./adminRoute");
 const authRoute = require("./authRoute");
 const userRoute = require("./userRoute");
 const postRoute = require("./postRoute");
+const siteRoute = require("./siteRoute");
 const addressRoute = require("./addressRoute");
-const { homeController } = require("../controllers");
 const validateToken = require("../middlewares/ValidateToken");
 /* GET home page. */
-router.get("/", homeController.getHome);
-
+router.use("/", siteRoute);
 router.use("/address", addressRoute);
 // GET auth routers
 router.use("/auth", authRoute);

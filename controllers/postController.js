@@ -3,6 +3,8 @@ const moment = require("moment");
 const Comments = require("../models/comment");
 const Posts = require("../models/posts");
 const Users = require("../models/users");
+const getDetail = require("../utils/Detail");
+const Toast = require("../utils/Toast");
 module.exports = {
 	postView: async (req, res) => {
 		res.render("post/index");
@@ -57,7 +59,6 @@ module.exports = {
 					},
 				}
 			);
-			console.log("POST", newPost[0].id_post);
 
 			await sequelize.query(
 				`CALL sp_insert_convenient (:pr_reid , :pr_bedroom , :pr_bathroom ,
@@ -97,35 +98,7 @@ module.exports = {
 	detail: async (req, res) => {
 		try {
 			const { id } = req.params;
-			const convenients = await sequelize.query(
-				"CALL sp_get_convenient(:pr_reid)",
-				{
-					replacements: {
-						pr_reid: id,
-					},
-				}
-			);
-			const detail = await sequelize.query(
-				"CALL sp_show_detail_info(:pr_reid)",
-				{
-					replacements: {
-						pr_reid: id,
-					},
-				}
-			);
-			const medias = await sequelize.query(
-				"CALL sp_get_listMedias(:pr_reid)",
-				{
-					replacements: {
-						pr_reid: id,
-					},
-				}
-			);
-			const post = {
-				convenients: convenients[0],
-				detail: detail[0],
-				medias,
-			};
+			const post = await getDetail(id);
 			const comments = await Comments.findAll({
 				include: Users,
 			});
@@ -170,6 +143,37 @@ module.exports = {
 				}
 			);
 			res.status(200).json(sendComment);
+		} catch (err) {
+			res.status(400).json({ message: err.message });
+		}
+	},
+	sendReport: async (req, res) => {
+		try {
+			const { id } = req.params;
+			const { email, phone, content } = req.body;
+
+			const report = await sequelize.query(
+				`CALL sp_Report(:pr_reid , :pr_phone , :pr_email , :pr_contentrp)`,
+				{
+					replacements: {
+						pr_reid: id,
+						pr_email: email,
+						pr_phone: phone,
+						pr_contentrp: content,
+					},
+				}
+			);
+			if (report[0][0] === 0) {
+				res.render("error/index", {
+					error: "Nội dung tố cáo quá ngắn",
+				});
+			} else if (report[0][1] === 1) {
+				res.render("error/index", {
+					error: "Bạn đã tố cáo bài viết này rồi",
+				});
+			} else {
+				res.redirect(`/post/${id}`);
+			}
 		} catch (err) {
 			res.status(400).json({ message: err.message });
 		}

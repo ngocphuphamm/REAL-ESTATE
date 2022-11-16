@@ -1,5 +1,5 @@
 const express = require("express");
-const { userController } = require("../controllers/");
+const { userController } = require("../controllers");
 const router = express.Router();
 
 router.get("/post", (req, res) => res.json({ message: "Chưa có view nha" }));

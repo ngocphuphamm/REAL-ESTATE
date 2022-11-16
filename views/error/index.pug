@@ -1,0 +1,7 @@
+extends ../common/layout.pug 
+block content
+    .d-flex.justify-content-center.align-items-center 
+        if(error)
+            .d-flex.flex-column.gap-3
+                img(src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQwJsK2YEAYNq_080I18ZUQSZ1Mz3NhdsVSA&usqp=CAU" ,alt="...")
+                h1=error
