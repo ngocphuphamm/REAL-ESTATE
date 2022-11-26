@@ -11,7 +11,7 @@ BEGIN
     WHERE  p.provinceid = pr_province_id;
     
     IF isExitsProvince <= 0 THEN 
-		SELECT "Hiện không có nhà đất nào tại đây";
+		SELECT 0,"Hiện không có nhà đất nào tại đây";
 	ELSE
 		SELECT *
         FROM posts p JOIN medias m
