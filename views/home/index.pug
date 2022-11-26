@@ -1,10 +1,39 @@
 extends ../common/layout.pug 
 block content
     .d-flex.flex-column.gap-5
-        .py-5.px-3.shadow
-            .d-flex.justify-content-center
+        .py-5.p-5.shadow.d-flex.flex-column.gap-3
+            .d-flex.justify-content-center.align-items-center.gap-3
+                div Cho thuê bất động sản
                 input.form-control.w-75(placeholder="VD: Vinhome Central Park")
-                button.btn.btn-dark.ms-3 Tìm kiếm
+                button.btn.btn-dark Tìm kiếm
+            .d-flex.justify-content-center
+                .dropdown
+                    button.btn.btn-secondary.dropdown-toggle(type='button' data-bs-toggle='dropdown' aria-expanded='false')
+                        | Trên toàn quốc
+                    ul.dropdown-menu.p-3(style={'width':'250px'})
+                        .d-flex.flex-column.gap-3
+                            div.fw-bold Khu vực dự án
+                            .inputGroup
+                                label Tỉnh, thành phố
+                                select.form-select(name="provinceid" id="province" required)
+                                    option(value="") Chọn
+                            .inputGroup
+                                label Quận, huyện
+                                select.form-select(name="districtid" id="district" required)
+                                    option(value="") Chọn
+                            .inputGroup
+                                label Phường, xã
+                                select.form-select(name="wardid" id="ward" required)
+                                    option(value="") Chọn
+                            .inputGroup
+                                label Đường, phố
+                                select.form-select(name="streetid" id="street")
+                                    option(value="") Chọn
+                            .inputGroup
+                                label Dự án
+                                select.form-select(name="projectid" id="project")
+                                    option(value="") Chọn
+                            butto.btn.n.btn-outline-dark.ms-auto Áp dụng
         .row.row-cols-4.gap-5 
             each post in posts
                 .card(style='width: 18rem;').col
@@ -14,3 +43,4 @@ block content
                         h5.card-title= post.dataValues.title
                         p.card-text= post.dataValues.description
                         a.stretched-link(href="/post/" + post.dataValues.reid)
+    script(src="/public/javascripts/address.js" type="text/javascript")
