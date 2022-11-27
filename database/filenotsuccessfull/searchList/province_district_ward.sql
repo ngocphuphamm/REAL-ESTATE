@@ -21,7 +21,8 @@ BEGIN
 		FROM posts p join medias m 
 					 on m.reid = p.reid 
 		WHERE  p.provinceid = pr_province_id AND p.districtid  = pr_district_id
-			   AND p.districtid = pr_ward_id;
-		
+			   AND p.districtid = pr_ward_id
+		GROUP BY p.reid;
+
 	END IF ;
 END; $$

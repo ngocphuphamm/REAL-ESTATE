@@ -19,6 +19,8 @@ BEGIN
 		SELECT *
 		FROM posts p join medias m 
 					 on m.reid = p.reid
-		WHERE  p.projectid = pr_project_id ;
+		WHERE  p.projectid = pr_project_id 
+		GROUP BY p.reid;
+
 	END IF ;
 END; $$

@@ -18,6 +18,8 @@ BEGIN
 		SELECT *
         FROM posts p JOIN medias m
 					 ON m.reid = p.reid
-        WHERE p.provinceid = pr_province_id AND p.districtid  = pr_district_id;
+        WHERE p.provinceid = pr_province_id AND p.districtid  = pr_district_id
+		GROUP BY p.reid;
+
 	END IF ;
 END; $$
