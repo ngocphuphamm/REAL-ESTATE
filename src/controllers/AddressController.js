@@ -37,7 +37,15 @@ module.exports = {
 		);
 		res.status(200).json(wards.flat());
 	},
-	projects: async (req, res) => {
+	projectsByProvince: async (req, res) => {
+		const { provinceID } = req.query;
+		const projects = await sequelize.query(
+			`SELECT * FROM project WHERE provinceid = '${provinceID}'`,
+			{ type: sequelize.QueryTypes.SELECT }
+		);
+		res.status(200).json(projects.flat());
+	},
+	projectsByDistrictAndProvince: async (req, res) => {
 		const { districtID, provinceID } = req.query;
 		const projects = await sequelize.query(
 			`SELECT * FROM project WHERE districtid = '${districtID}' AND provinceid = '${provinceID}'`,

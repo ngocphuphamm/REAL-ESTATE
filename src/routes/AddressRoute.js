@@ -7,6 +7,10 @@ router.get("/provinces", addressController.provinces);
 router.get("/districts/", addressController.districts);
 router.get("/wards/", addressController.wards);
 router.get("/streets/", addressController.streets);
-router.get("/projects/", addressController.projects);
+router.get("/projectsByProvince/", addressController.projectsByProvince);
+router.get(
+	"/projectsByDistrictAndProvince/",
+	addressController.projectsByDistrictAndProvince
+);
 
 module.exports = router;

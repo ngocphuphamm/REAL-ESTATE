@@ -35,9 +35,16 @@ const fetchStreet = async (district, province) => {
 	const data = await res.json();
 	return data;
 };
-const fetchProject = async (district, province) => {
+const fetchProjectByDistrictAndProvince = async (district, province) => {
 	const res = await fetch(
-		`/address/projects/?districtID=${district}&provinceID=${province}`
+		`/address/projectsByDistrictAndProvince/?districtID=${district}&provinceID=${province}`
+	);
+	const data = await res.json();
+	return data;
+};
+const fetchProjectByProvince = async (province) => {
+	const res = await fetch(
+		`/address/projectsByProvince/?provinceID=${province}`
 	);
 	const data = await res.json();
 	return data;
@@ -81,6 +88,13 @@ const renderAddress = async (data) => {
 				dis.districtid
 			);
 		}
+		const projects = await fetchProjectByProvince(city.value);
+		for (let p of projects) {
+			project.options[project.options.length] = new Option(
+				p.nameproject,
+				p.projectid
+			);
+		}
 	};
 	district.onchange = async () => {
 		removeOptions(ward);
@@ -92,6 +106,16 @@ const renderAddress = async (data) => {
 			ward.options[ward.options.length] = new Option(
 				w.nameward,
 				w.wardid
+			);
+		}
+		const projects = await fetchProjectByDistrictAndProvince(
+			district.value,
+			city.value
+		);
+		for (let p of projects) {
+			project.options[project.options.length] = new Option(
+				p.nameproject,
+				p.projectid
 			);
 		}
 	};
@@ -109,13 +133,6 @@ const renderAddress = async (data) => {
 	};
 	street.onchange = async () => {
 		if (!street.value) return;
-		const data = await fetchProject(district.value, city.value);
-		for (let p of data) {
-			project.options[project.options.length] = new Option(
-				p.nameproject,
-				p.projectid
-			);
-		}
 	};
 };
 fetchCategories();

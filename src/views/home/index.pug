@@ -1,17 +1,16 @@
 extends ../common/layout.pug 
 block content
     .d-flex.flex-column.gap-5
-        .py-5.p-5.shadow.d-flex.flex-column.gap-3
+        form.py-5.p-5.shadow.d-flex.flex-column.gap-3(method="GET" action="/search")
             .d-flex.justify-content-center.align-items-center.gap-3
                 div Cho thuê bất động sản
-                input.form-control.w-75(placeholder="VD: Vinhome Central Park")
-                button.btn.btn-dark Tìm kiếm
+                input.form-control.w-75(placeholder="VD: Vinhome Central Park" name="keyword")
+                button.btn.btn-dark(type="submit") Tìm kiếm
             .d-flex.justify-content-center
                 .dropdown
                     button.btn.btn-secondary.dropdown-toggle(type='button' data-bs-toggle='dropdown' aria-expanded='false')
                         | Trên toàn quốc
                     ul.dropdown-menu.p-3(style={'width':'250px'})
-                        form.d-flex.flex-column.gap-3(method="GET" action="/search")
                             div.fw-bold Khu vực dự án
                             .inputGroup
                                 label Tỉnh, thành phố
@@ -34,13 +33,14 @@ block content
                                 select.form-select(name="projectid" id="project")
                                     option(value="") Chọn
                             button.btn.btn-outline-dark.ms-auto(type="submit") Áp dụng
-        .row.row-cols-4.gap-5 
+        .row.row-cols-4.gap-5
+            if(!posts.length)
+                div Không có bất động sản nào 
             each post in posts
                 .card(style='width: 18rem;').col
-                    if(post.dataValues.medias.length)
-                        img.card-img-top(src=post.dataValues.medias[0].dataValues.url alt='...')
+                    img.card-img-top(src=post.url alt='...')
                     .card-body
-                        h5.card-title= post.dataValues.title
-                        p.card-text= post.dataValues.description
-                        a.stretched-link(href="/post/" + post.dataValues.reid)
+                        h5.card-title= post.title 
+                        p.card-text= post.description
+                        a.stretched-link(href="/post/" + post.reid)
     script(src="/public/javascripts/address.js" type="text/javascript")
