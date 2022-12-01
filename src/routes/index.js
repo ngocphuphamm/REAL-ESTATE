@@ -6,7 +6,7 @@ const userRoute = require("./userRoute");
 const postRoute = require("./postRoute");
 const siteRoute = require("./siteRoute");
 const addressRoute = require("./addressRoute");
-const validateToken = require("../middlewares/ValidateToken");
+const validateToken = require("../middlewares/validateToken");
 /* GET home page. */
 router.use("/", siteRoute);
 router.use("/address", addressRoute);

@@ -1,60 +1,58 @@
-const authArea = $("#authArea");
+const authArea = $('#authArea');
 
 const fetchUser = async (userID) => {
-	const res = await fetch(`/user/${userID}`);
-	const data = await res.json();
-	return data;
+    const res = await fetch(`/user/${userID}`);
+    const data = await res.json();
+    return data;
 };
 const Toast = Swal.mixin({
-	toast: true,
-	position: "bottom-end",
-	showConfirmButton: false,
-	timer: 3000,
-	timerProgressBar: true,
-	didOpen: (toast) => {
-		toast.addEventListener("mouseenter", Swal.stopTimer);
-		toast.addEventListener("mouseleave", Swal.resumeTimer);
-	},
+    toast: true,
+    position: 'bottom-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+    },
 });
 
 const getCookie = (cname) => {
-	let name = cname + "=";
-	let decodedCookie = decodeURIComponent(document.cookie);
-	let ca = decodedCookie.split(";");
-	for (let i = 0; i < ca.length; i++) {
-		let c = ca[i];
-		while (c.charAt(0) == " ") {
-			c = c.substring(1);
-		}
-		if (c.indexOf(name) == 0) {
-			return c.substring(name.length, c.length);
-		}
-	}
-	return "";
+    let name = cname + '=';
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return '';
 };
 
 const renderAuth = async () => {
-	const cookie = getCookie("userID");
-	if (!cookie) {
-		return authArea.html(
-			`
+    const cookie = getCookie('userID');
+    if (!cookie) {
+        return authArea.html(
+            `
 			<div class="d-flex align-items-center gap-3">
 				<a href="/auth/login" class="text-dark text-decoration-none">Đăng nhập</a>
 				<a href="/auth/register" class="text-dark text-decoration-none">Đăng ký</a>
 				<a href="/post" class="btn btn-outline-dark">Đăng tin</a>
 			</div>
             `
-		);
-	}
-	const data = await fetchUser(cookie);
+        );
+    }
+    const data = await fetchUser(cookie);
 
-	authArea.html(
-		`
+    authArea.html(
+        `
         	<div class="d-flex gap-3 align-items-center dropdown">
 				<ul class="dropdown-menu">
-					<li><a class="dropdown-item" href="/user/${getCookie(
-						"userID"
-					)}/bookmark">Tin đã lưu</a></li>
+					<li><a class="dropdown-item" href="/user/${getCookie('userID')}/bookmark">Tin đã lưu</a></li>
 					<li><a class="dropdown-item" href="/auth/logout">Đăng xuất</a></li>
 				</ul>
 				<div class="d-flex gap-1 align-items-center dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
@@ -64,6 +62,6 @@ const renderAuth = async () => {
 				<a class="btn btn-outline-dark" href="/post">Đăng tin</a>
         	</div>
         `
-	);
+    );
 };
 renderAuth();
