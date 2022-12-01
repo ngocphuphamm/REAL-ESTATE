@@ -24,8 +24,8 @@ module.exports = {
                 },
                 include: [{ model: Posts, include: [Medias] }],
             });
-            bookmark.forEach((b) => {
-                const post = b.dataValues.post;
+            bookmark.forEach((book) => {
+                const post = book.dataValues.post;
                 arrPost.push(post);
             });
             res.render('post/bookmark', { posts: arrPost });

@@ -28,7 +28,7 @@ module.exports = {
     },
     register: async (req, res) => {
         try {
-            const { name, username, password, email, phone, avatar } = req.body;
+            const { name, username, password, email, phone } = req.body;
 
             const newUser = await sequelize.query(
                 'CALL sp_Register (:pr_username, :pr_password, :pr_name, :pr_email, :pr_phone)',
@@ -42,7 +42,6 @@ module.exports = {
                     },
                 }
             );
-            console.log(newUser);
             res.redirect('/auth/login');
         } catch (err) {
             res.status(400).json({ message: err.message });

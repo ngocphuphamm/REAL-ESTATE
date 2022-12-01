@@ -18,11 +18,6 @@ module.exports = {
     search: async (req, res) => {
         try {
             const { provinceid, districtid, wardid, streetid, projectid, keyword } = req.query;
-			
-            const initialPosts = await sequelize.query(`SELECT *
-												FROM posts p JOIN medias m
-												ON m.reid = p.reid
-												`);
 
             let posts;
             if (keyword && !provinceid && !districtid && !wardid && !streetid && !projectid) {
