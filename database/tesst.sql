@@ -95,3 +95,6 @@ INSERT INTO convenient (convenientid, reid, bedroom, bathroom, floor, direction,
 CALL sp_get_listPosts("ÁD");
 ------
 
+CALL sp_bans_post("d5ef3568-634c-11ed-b1d9-00155d87afbf","77ebde3d-634d-11ed-b1d9-00155d87afbf");
+------
+
