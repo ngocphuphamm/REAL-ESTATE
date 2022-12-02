@@ -8,7 +8,8 @@ BEGIN
     
 	SELECT COUNT(*) into isExitsProvince
     FROM posts p 
-    WHERE  p.provinceid = pr_province_id;
+    WHERE  p.provinceid = pr_province_id
+		   AND  p.approve = 0; 
     
     IF isExitsProvince <= 0 THEN 
 		SELECT 0,"Hiện không có nhà đất nào tại đây";
@@ -16,7 +17,7 @@ BEGIN
 		SELECT *
         FROM posts p JOIN medias m
 					 ON m.reid = p.reid
-        WHERE p.provinceid = pr_province_id
+        WHERE p.provinceid = pr_province_id AND  p.approve = 0
         GROUP BY p.reid;
 	END IF ;
 END; $$

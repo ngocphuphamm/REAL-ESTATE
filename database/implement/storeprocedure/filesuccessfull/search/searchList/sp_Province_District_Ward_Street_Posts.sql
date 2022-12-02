@@ -10,8 +10,8 @@ BEGIN
 	SELECT COUNT(*) into isExists
     FROM posts p 
     WHERE  p.provinceid = pr_province_id AND p.districtid  = pr_district_id
-		   AND p.wardid = pr_ward_id AND p.streetid = pr_street_id;
-    
+		   AND p.wardid = pr_ward_id AND p.streetid = pr_street_id 
+           AND  p.approve = 0 ;
     
     
     IF isExists <= 0 THEN 
@@ -21,7 +21,7 @@ BEGIN
 		FROM posts p join medias m 
 					 on m.reid = p.reid
 		WHERE  p.provinceid = pr_province_id AND p.districtid  = pr_district_id
-			   AND p.wardid = pr_ward_id AND p.streetid = pr_street_id
+			   AND p.wardid = pr_ward_id AND p.streetid = pr_street_id AND  p.approve = 0
 		GROUP BY p.reid;
 
 	END IF ;

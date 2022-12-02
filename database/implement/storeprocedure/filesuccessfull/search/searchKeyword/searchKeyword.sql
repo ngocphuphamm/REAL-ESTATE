@@ -9,9 +9,10 @@ BEGIN
 					SELECT  *
                     FROM posts p JOIN medias m
 								ON m.reid = p.reid 
-                    WHERE p.title like pr_keyword
+                    WHERE p.title like pr_keyword AND  p.approve = 0
                     group by p.reid;
 				SET SQL_SAFE_UPDATES = 1;
 			COMMIT;
 		SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
 END; $$
+

@@ -97,4 +97,5 @@ CALL sp_get_listPosts("ÁD");
 
 CALL sp_bans_post("d5ef3568-634c-11ed-b1d9-00155d87afbf","77ebde3d-634d-11ed-b1d9-00155d87afbf");
 ------
-
+CALL sp_update_status_post("d5ef3568-634cád-11ed-b1d9-00155d87afbf","93723bc4-6429-11ed-b1d9-00155d87afbf")
+------

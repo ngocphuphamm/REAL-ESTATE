@@ -11,7 +11,9 @@ BEGIN
 
 	SELECT COUNT(*) into isExists
     FROM posts p 
-    WHERE  p.projectid = pr_project_id AND p.provinceid = pr_province_id ;
+    WHERE  p.projectid = pr_project_id 
+		   AND p.provinceid = pr_province_id 
+           AND  p.approve = 0;
     
     IF isExists <= 0 THEN 
 		SELECT "Hiện không có nhà đất nào tại đây";
@@ -20,6 +22,7 @@ BEGIN
 		FROM posts p join medias m 
 					 on m.reid = p.reid
 		WHERE  p.projectid = pr_project_id AND p.provinceid = pr_province_id 
+			  AND  p.approve = 0
 		GROUP BY p.reid;
 
 	END IF ;
