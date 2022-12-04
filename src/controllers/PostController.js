@@ -50,7 +50,7 @@ module.exports = {
                         pr_phone: phone,
                         pr_address: address,
                         pr_userid: user[0].userid,
-                        pr_projectid: projectid,
+                        pr_projectid: projectid == 0 ? null : projectid,
                         pr_streetid: streetid,
                         pr_wardid: wardid,
                         pr_districtid: districtid,

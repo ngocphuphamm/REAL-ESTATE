@@ -3,7 +3,8 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"start": "nodemon index.js"
+		"start": "nodemon index.js",
+		"dev": "nodemon --inspect index.js"
 	},
 	"dependencies": {
 		"compression": "^1.7.4",
