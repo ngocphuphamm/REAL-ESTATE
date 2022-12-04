@@ -34,13 +34,14 @@ block content
                                     option(value="") Chọn
                             button.btn.btn-outline-dark.ms-auto(type="submit") Áp dụng
         .row.row-cols-4.gap-5
-            if(!posts.length)
+            if(posts && !posts.length || !posts)
                 div Không có bất động sản nào 
-            each post in posts
-                .card(style='width: 18rem;').col
-                    img.card-img-top(src=post.url ? post.url : "https://picsum.photos/300" alt='...')
-                    .card-body
-                        h5.card-title= post.title 
-                        p.card-text= post.description
-                        a.stretched-link(href="/post/" + post.reid)
+            else 
+                each post in posts
+                    .card(style='width: 18rem;').col
+                        img.card-img-top(src=post.url ? post.url : "https://picsum.photos/300" alt='...')
+                        .card-body
+                            h5.card-title= post.title 
+                            p.card-text= post.description
+                            a.stretched-link(href="/post/" + post.reid)
     script(src="/public/javascripts/address.js" type="text/javascript")
