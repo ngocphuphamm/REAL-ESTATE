@@ -1,10 +1,9 @@
-	sp_savePostsselect * 
-	from saveposts 
 
-	DELIMITER $$
-	DROP PROCEDURE IF EXISTS sp_savePosts $$
-	CREATE PROCEDURE sp_savePosts(pr_reid char(40), pr_userid char(40))
-	BEGIN
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS sp_savePosts $$
+CREATE PROCEDURE sp_savePosts(pr_reid char(40), pr_userid char(40))
+BEGIN
 		DECLARE isExists int DEFAULT -1;
 		DECLARE savePost_id char(40) DEFAULT uuid();
 		DECLARE savePost_id_exists char(40) DEFAULT -1;
@@ -19,8 +18,8 @@
 			SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 			START TRANSACTION;
 				SET SQL_SAFE_UPDATES = 0;
-					DELETE FROM saveposts s 
-					WHERE s.reid = pr_reid AND s.userid = pr_userid;
+					DELETE FROM saveposts  
+					WHERE saveposts.reid = pr_reid AND saveposts.userid = pr_userid;
 				SET SQL_SAFE_UPDATES = 1;
 			COMMIT;
 			SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
@@ -38,5 +37,5 @@
 			FROM saveposts s
 			WHERE s.reid = pr_reid AND s.userid = pr_userid ;
 		END IF;    
-	END; $$
+END; $$
 
