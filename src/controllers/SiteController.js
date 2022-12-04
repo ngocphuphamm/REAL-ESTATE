@@ -7,8 +7,7 @@ module.exports = {
     home: async (req, res) => {
         try {
             const posts = await sequelize.query(`SELECT *
-												FROM posts p JOIN medias m
-												ON m.reid = p.reid
+												FROM posts
 												`);
             res.render('home/index', { posts: posts[0] });
         } catch (err) {

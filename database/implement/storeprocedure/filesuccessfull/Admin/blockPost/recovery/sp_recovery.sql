@@ -14,7 +14,7 @@ BEGIN
     IF is_exists_posts = 0 THEN 
 		SELECT 0 as "status","Post not exists" as "message",'' as 'data';
     ELSE 
-		SET is_admin = fnc_checkAuthorization(pr_id_user);
+		SET is_admin = fnc_check_authorization(pr_id_user);
 		IF is_admin = 1 THEN  
 			SET is_check_blocked = fnc_check_blocked(pr_id_post);
 			IF is_check_blocked = 0 THEN 

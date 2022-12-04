@@ -1,0 +1,35 @@
+extends ../common/admin.layout.pug
+block content
+    h3 USER MANAGEMENT
+    .table-responsive
+        table.table.align-middle
+            thead
+                tr
+                th #
+                th Tên
+                th Loại 
+                th Số điện thoại
+                th Email
+                th Trạng thái
+                th Tùy chọn
+            tbody
+                if(users)
+                    each user in users
+                        tr
+                            td=user.userid
+                            td=user.name
+                            td=user.typeuser
+                            td=user.phone 
+                            td=user.email
+                            td
+                                if(user.status === 0)
+                                    span.badge.rounded-pill.text-bg-primary Tốt
+                                else
+                                    span.badge.rounded-pill.text-bg-danger Khóa
+                            td
+                                form(method="POST").d-flex.gap-3
+                                    input(type="hidden" value=user.userid name=user.status === 0 ? "userToBlock" : "userToRecovery")
+                                    if(user.status === 0)
+                                        button.btn.btn-outline-dark Khóa
+                                    else
+                                        button.btn.btn-outline-success Khôi phục        

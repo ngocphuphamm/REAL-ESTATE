@@ -21,32 +21,36 @@ const sendBookMark = async () => {
     });
     const data = await res.json();
     if (data[0].savePost_id_exists) {
-        return Toast.fire({ title: 'Bạn đã hủy lưu tin', icon: 'warning' });
+        return toast.fire({ title: 'Bạn đã hủy lưu tin', icon: 'warning' });
     } else {
-        return Toast.fire({
+        return toast.fire({
             title: 'Bạn đã lưu tin thành công',
             icon: 'success',
         });
     }
 };
 const addComment = async (body) => {
-    const res = await fetch(`/post/${reid}/comment`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-    });
-    const data = await res.json();
-    if (data[0][0] === 0) {
-        Toast.fire({
-            title: 'Bạn đã bình luận bài post này',
-            icon: 'warning',
+    try {
+        const res = await fetch(`/post/${reid}/comment`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
         });
-        return commentContent.val('');
+        const data = await res.json();
+        if (data[0][0] === 0) {
+            toast.fire({
+                title: 'Bạn đã bình luận bài post này',
+                icon: 'warning',
+            });
+            return commentContent.val('');
+        }
+        window.location.reload();
+        return data;
+    } catch (err) {
+        toast.fire({ title: err.message, icon: 'error' });
     }
-    window.location.reload();
-    return data;
 };
 bookmark.on('click', () => sendBookMark());
 addCommentBtn.on('click', () => addComment({ reid, userid, content: commentContent.val() }));

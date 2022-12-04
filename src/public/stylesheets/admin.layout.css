@@ -1,0 +1,8 @@
+.leftPanel {
+    width: 15vw;
+    height: 100vh;
+}
+
+.pluginItem:hover {
+    background-color: aliceblue;
+}

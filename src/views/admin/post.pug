@@ -1,0 +1,29 @@
+extends ../common/admin.layout.pug
+block content
+    h3 POST MANAGEMENT 
+    .table-responsive
+        table.table.align-middle
+            thead
+                tr
+                th #
+                th Tiêu đề
+                th Trạng thái
+                th Tùy chọn
+            tbody
+                if(posts)
+                    each post in posts 
+                        tr 
+                            td=post.reid 
+                            td=post.title
+                            td
+                                if(post.approve === 0)
+                                        span.badge.rounded-pill.text-bg-primary Tốt
+                                else
+                                    span.badge.rounded-pill.text-bg-danger Khóa
+                            td
+                                    form(method="POST").d-flex.gap-3
+                                        input(type="hidden" value=post.reid name=post.approve === 0 ? "postToBlock" : "postToRecovery")
+                                        if(post.approve === 0)
+                                            button.btn.btn-outline-dark Khóa
+                                        else
+                                            button.btn.btn-outline-success Khôi phục    

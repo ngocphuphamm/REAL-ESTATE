@@ -38,7 +38,7 @@ block content
                 div Không có bất động sản nào 
             each post in posts
                 .card(style='width: 18rem;').col
-                    img.card-img-top(src=post.url alt='...')
+                    img.card-img-top(src=post.url ? post.url : "https://picsum.photos/300" alt='...')
                     .card-body
                         h5.card-title= post.title 
                         p.card-text= post.description

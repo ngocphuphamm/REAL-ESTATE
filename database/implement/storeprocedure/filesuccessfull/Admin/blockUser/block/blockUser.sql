@@ -62,8 +62,8 @@ begin
 END; $$
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS sp_recovery_user $$
-CREATE PROCEDURE sp_recovery_user(pr_id_user char(40), pr_id_user_block char(40)) 
+DROP PROCEDURE IF EXISTS sp_block_user $$
+CREATE PROCEDURE sp_block_user(pr_id_user char(40), pr_id_user_block char(40)) 
 BEGIN	
     DECLARE is_admin INT DEFAULT 0;
     DECLARE is_exists_user INT DEFAULT -1; 
@@ -73,24 +73,23 @@ BEGIN
     IF is_exists_user = 0 THEN 
 		SELECT 0 as "status", "User không tồn tại" as "message", "" as "data";
     ELSE 
-		SET is_admin = fnc_checkAuthorization(pr_id_user);
+		SET is_admin = fnc_check_authorization(pr_id_user);
 		IF is_admin = 1 THEN  
 			SET is_check_blocked = fnc_check_blocked_user(pr_id_user_block);
 			IF is_check_blocked > 0 THEN 
-            	SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+				SELECT 0 as "status", "User đã được block" as "message",'' as "data";
+			ELSE 
+					SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 					START TRANSACTION;
 						SET SQL_SAFE_UPDATES = 0;
 							UPDATE users
-							SET status = 0
+							SET status = 1
 							WHERE userid = pr_id_user_block;
 						SET SQL_SAFE_UPDATES = 1;
 					COMMIT;
 					SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
                     
 					SELECT 1 as "status","Update thành công" as "message",'' as "data"  ;
-				
-			ELSE 
-				SELECT 0 as "status", "User không bị chặn" as "message",'' as "data";
             END IF;
 		ELSE 
 			SELECT 0 as "status","Bạn Không Phải Admin" as "message",'' as "data";
@@ -99,6 +98,6 @@ BEGIN
 END; $$
 
 
-CALL sp_recovery_user("d5ef3568-634c-11ed-b1d9-00155d87afbf","41febb60-7233-11ed-b4c1-c8b29b839518")
+CALL sp_block_user("d5ef3568-634c-11ed-b1d9-00155d87afbf","41febb60-7233-11ed-b4c1-c8b29b839518")
 
 

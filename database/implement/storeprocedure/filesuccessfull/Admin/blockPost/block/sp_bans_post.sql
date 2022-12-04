@@ -63,19 +63,19 @@ END; $$
 
 DELIMITER $$
 DROP PROCEDURE IF EXISTS sp_bans_post $$
-CREATE PROCEDURE sp_bans_post(pr_idUser char(40), pr_idPost char(40)) 
+CREATE PROCEDURE sp_bans_post(pr_idUser char(40), pr_id_post char(40)) 
 BEGIN	
     DECLARE is_admin INT DEFAULT 0;
     DECLARE is_exists_posts INT DEFAULT -1; 
     DECLARE is_check_blocked INT DEFAULT -1;
-    SET is_exists_posts = fnc_is_exists_posts(pr_idPost);
+    SET is_exists_posts = fnc_is_exists_posts(pr_id_post);
     
     IF is_exists_posts = 0 THEN 
 		SELECT "Post not exists";
     ELSE 
-		SET is_admin = fnc_checkAuthorization(pr_idUser);
+		SET is_admin = fnc_check_authorization(pr_idUser);
 		IF is_admin = 1 THEN  
-			SET is_check_blocked = fnc_check_blocked(pr_idPost);
+			SET is_check_blocked = fnc_check_blocked(pr_id_post);
 			IF is_check_blocked > 0 THEN 
 				SELECT 0 as "status", "POST BLOCKED" as "message",'' as "data";
 			ELSE 
@@ -84,7 +84,7 @@ BEGIN
 						SET SQL_SAFE_UPDATES = 0;
 							UPDATE Posts
 							SET approve = 1
-							WHERE reid = pr_idPost;
+							WHERE reid = pr_id_post;
 						SET SQL_SAFE_UPDATES = 1;
 					COMMIT;
 					SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;

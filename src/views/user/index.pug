@@ -1,0 +1,12 @@
+extends ../common/layout.pug 
+block content
+    h3.text-center Thông tin cá nhân
+    form.d-flex.flex-column.gap-3.mb-3(method="POST")
+        .inputGroup
+            label Họ và tên
+            input.form-control(name="name" required value=user?user.name:"")
+        .inputGroup
+            label Phone
+            input.form-control(name="phone" required value=user?user.phone:"")    
+        .d-flex.justify-content-center.gap-3
+            button(type="submit").btn.btn-dark Sửa

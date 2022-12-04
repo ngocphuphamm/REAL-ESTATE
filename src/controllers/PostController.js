@@ -141,11 +141,16 @@ module.exports = {
         }
     },
     sendReport: async (req, res) => {
+        const { id } = req.params;
+        const { email, phone, content } = req.body;
+        if (!id || !email || !phone || !content)
+            return res.render('post/detail', { post, moment, comments, toast: err.message });
+        const post = await getDetail(id);
+        const comments = await Comments.findAll({
+            include: Users,
+        });
         try {
-            const { id } = req.params;
-            const { email, phone, content } = req.body;
-
-            const report = await sequelize.query(
+            await sequelize.query(
                 `CALL sp_Report(:pr_reid , :pr_phone , :pr_email , :pr_contentrp)`,
                 {
                     replacements: {
@@ -156,19 +161,9 @@ module.exports = {
                     },
                 }
             );
-            if (report[0][0] === 0) {
-                res.render('error/index', {
-                    error: 'Nội dung tố cáo quá ngắn',
-                });
-            } else if (report[0][1] === 1) {
-                res.render('error/index', {
-                    error: 'Bạn đã tố cáo bài viết này rồi',
-                });
-            } else {
-                res.redirect(`/post/${id}`);
-            }
+            res.redirect(`/post/${id}`);
         } catch (err) {
-            res.status(400).json({ message: err.message });
+            res.render('post/detail', { post, moment, comments, toast: err.message });
         }
     },
 };

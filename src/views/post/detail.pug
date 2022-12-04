@@ -2,11 +2,11 @@ extends ../common/layout.pug
 block content
     link(rel="stylesheet" href="/public/stylesheets/carousel.css")
 
-    #exampleModal.modal.fade(tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true')
+    #reportModal.modal.fade(tabindex='-1' aria-labelledby='reportModalLabel' aria-hidden='true')
         .modal-dialog.modal-dialog-centered
             .modal-content
                 .modal-header
-                    h1#exampleModalLabel.modal-title.fs-5 Báo cáo
+                    h1#reportModalLabel.modal-title.fs-5 Báo cáo
                     button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
                 form(method="POST" action=`/post/${post.detail.reid}/report`)
                     .modal-body
@@ -32,10 +32,6 @@ block content
                 .carousel-inner
                     .carousel-item.active
                         img.d-block.w-100(src="/"+post.medias[0].url alt="")
-                    //- .carousel-item
-                    //-     img.d-block.w-100(src="/"+post.medias[1].url alt="")
-                    //- .carousel-item
-                    //-     img.d-block.w-100(src="/"+post.medias[2].url alt="")
                 button.carousel-control-prev(type='button' data-bs-target='#carouselExampleControls' data-bs-slide='prev')
                     span.carousel-control-prev-icon(aria-hidden='true')
                     span.visually-hidden Previous
@@ -58,7 +54,7 @@ block content
                         div.fw-bold=post.convenients.bedroom+ " PN"
                     .d-flex.ms-auto.gap-2
                         i.fa.fa-thin.fa-share-nodes.fa-lg
-                        i.fa.fa-thin.fa-triangle-exclamation.fa-lg( data-bs-toggle="modal" data-bs-target="#exampleModal")
+                        i.fa.fa-thin.fa-triangle-exclamation.fa-lg( data-bs-toggle="modal" data-bs-target="#reportModal")
                         i.fa.fa-thin.fa-heart.fa-lg#bookmark
                 hr
             .d-flex.flex-column.gap-4
