@@ -24,7 +24,7 @@ BEGIN
 	WHERE U.username = pr_username;
     
 	IF (isExists>0) THEN
-		SELECT 'Tài khoản đã tồn tại !';
+		SELECT 0;
 	ELSE
 		SET pw= fnc_SHAPassword(pr_password, privateKey);
 		START TRANSACTION;

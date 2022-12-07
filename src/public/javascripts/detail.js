@@ -10,23 +10,28 @@ $(document).ready(() => {
 });
 
 const sendBookMark = async () => {
-    if (!userid) return;
-    if (!reid) return;
-    const res = await fetch('/post/bookmark', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userid, reid }),
-    });
-    const data = await res.json();
-    if (data[0].savePost_id_exists) {
-        return toast.fire({ title: 'Bạn đã hủy lưu tin', icon: 'warning' });
-    } else {
-        return toast.fire({
-            title: 'Bạn đã lưu tin thành công',
-            icon: 'success',
+    try {
+        if (!userid || !reid) return;
+        const res = await fetch('/post/bookmark', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userid, reid }),
         });
+        const data = await res.json();
+        const response = data[0];
+        if (!response) throw new Error(data.message);
+        if (response && response.savePost_id_exists) {
+            return toast.fire({ title: 'Bạn đã hủy lưu tin', icon: 'warning' });
+        } else {
+            return toast.fire({
+                title: 'Bạn đã lưu tin thành công',
+                icon: 'success',
+            });
+        }
+    } catch (err) {
+        toast.fire({ title: err.message, icon: 'error' });
     }
 };
 const addComment = async (body) => {
@@ -39,9 +44,16 @@ const addComment = async (body) => {
             body: JSON.stringify(body),
         });
         const data = await res.json();
-        if (data[0][0] === 0) {
+        if (!data.success) {
+            return toast.fire({
+                title: data.message,
+                icon: 'warning',
+            });
+        }
+        const response = data.body[0];
+        if (response[0] === 0) {
             toast.fire({
-                title: 'Bạn đã bình luận bài post này',
+                title: 'Bạn đã bình luận bài post này hoặc nội dung comment không phù hợp',
                 icon: 'warning',
             });
             return commentContent.val('');

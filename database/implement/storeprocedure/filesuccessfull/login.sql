@@ -18,7 +18,7 @@ BEGIN
         FROM users u
         where u.userid = private_key;
     ELSE
-	    SELECT 'Tên đăng nhập hoặc mật khẩu không đúng !';
+	    SELECT 0;
     END IF;
     
 END; $$
