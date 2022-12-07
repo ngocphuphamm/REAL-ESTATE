@@ -638,10 +638,146 @@ BEGIN
     END IF;    
 END; $$
 
+DELIMITER $$
+DROP PROCEDURE IF EXISTS sp_get_listMedias $$
+CREATE PROCEDURE sp_get_listMedias(pr_reid char(40))
+BEGIN
+	DECLARE isExist int DEFAULT -1;
+    
+    SELECT COUNT(*) INTO isExist
+    FROM medias m
+	WHERE m.reid = pr_reid;
+    
+	IF (isExist = 0) THEN
+		SELECT 'Không có hình ảnh nào cả !';
+	ELSE
+		SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+		START TRANSACTION;
+			SET SQL_SAFE_UPDATES = 0;
+				SELECT url
+                from medias
+                where reid = pr_reid;
+            SET SQL_SAFE_UPDATES = 1;
+		COMMIT;
+        SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+    END IF;    
+END; $$
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS sp_update_status_post $$
+CREATE PROCEDURE sp_update_status_post(pr_id_user char(40), pr_id_post char(40)) 
+BEGIN	
+	DECLARE is_exists INT DEFAULT -1; 
+	DECLARE check_blocked INT DEFAULT -1;
+	DECLARE is_update_status INT DEFAULT -1 ;
+    DECLARE is_belong_user INT DEFAULT -1 ;
+    SET is_exists  = fnc_is_exists_posts(pr_id_post);
+
+    
+    IF is_exists > 0 THEN
+		SET check_blocked = fnc_check_blocked(pr_id_post);
+        IF check_blocked > 0 THEN
+			SELECT 0 as "status", "Bài post đã bị khóa" as "message", '' as 'data';
+        ELSE
+			SELECT COUNT(*) INTO is_update_status
+            FROM posts p 
+            WHERE p.reid = pr_id_post AND p.rented = 0 ;
+            
+            IF is_update_status > 0 THEN 
+				SELECT COUNT(*) INTO is_belong_user
+                FROM posts p
+                WHERE p.reid = pr_id_post AND p.userid = pr_id_user;
+                
+                IF is_belong_user > 0 THEN 
+					SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+					START TRANSACTION;
+						SET SQL_SAFE_UPDATES = 0;
+							UPDATE Posts
+							SET rented = 1
+							WHERE reid = pr_id_post;
+						SET SQL_SAFE_UPDATES = 0;
+					COMMIT;
+					SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+				ELSE 
+					SELECT 0 as 'status', "Bài post này không thuộc quyền sở hữu của bạn" as "message",	
+											'' as 'data';
+                END IF;
+			ELSE 
+				SELECT 0 as status, "Bài post đã được cập nhật trạng thái" as message , '' as 'data';
+            END IF; 
+        END IF;
+    ELSE 
+		SELECT 0 as 'status', 'Bài Posts không tồn tại' as 'message';
+    END IF;
+END; $$
 
 
 
 
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS sp_Edit_User $$
+CREATE PROCEDURE sp_Edit_User(pr_userid char(40),pr_name varchar(150), pr_phone varchar(100)) 
+BEGIN	
+	DECLARE isExistsUser INT DEFAULT -1; 
+    
+    SELECT COUNT(*) INTO isExistsUser
+    FROM users u
+    WHERE u.userid = pr_userid;
+    
+    IF isExistsUser <= 0 THEN
+		SELECT "USER KHÔNG TỒN TẠI";
+	ELSE
+        START TRANSACTION;
+			SET SQL_SAFE_UPDATES=0;
+			UPDATE users 
+			SET name = pr_name , phone = pr_phone
+            WHERE  userid = pr_userid;
+			SET SQL_SAFE_UPDATES=1;
+		COMMIT; 
+		
+        SELECT userid,name,username,email,phone
+        FROM users u
+		WHERE u.userid = pr_userid;
+    END IF;
+    
+END; $$
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS sp_bans_post $$
+CREATE PROCEDURE sp_bans_post(pr_idUser char(40), pr_id_post char(40)) 
+BEGIN	
+    DECLARE is_admin INT DEFAULT 0;
+    DECLARE is_exists_posts INT DEFAULT -1; 
+    DECLARE is_check_blocked INT DEFAULT -1;
+    SET is_exists_posts = fnc_is_exists_posts(pr_id_post);
+    
+    IF is_exists_posts = 0 THEN 
+		SELECT "Post not exists";
+    ELSE 
+		SET is_admin = fnc_check_authorization(pr_idUser);
+		IF is_admin = 1 THEN  
+			SET is_check_blocked = fnc_check_blocked(pr_id_post);
+			IF is_check_blocked > 0 THEN 
+				SELECT 0 as "status", "POST BLOCKED" as "message",'' as "data";
+			ELSE 
+					SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+					START TRANSACTION;
+						SET SQL_SAFE_UPDATES = 0;
+							UPDATE Posts
+							SET approve = 1
+							WHERE reid = pr_id_post;
+						SET SQL_SAFE_UPDATES = 1;
+					COMMIT;
+					SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+                    
+					SELECT 1 as "status","SUCCESS UPDATE" as "message",'' as "data"  ;
+            END IF;
+		ELSE 
+			SELECT 0 as "status","Not right admin" as "message",'' as "data";
+		END IF;
+	END IF;
+END; $$
 
 
 
