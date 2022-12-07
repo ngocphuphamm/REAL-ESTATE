@@ -32,7 +32,7 @@ BEGIN
 							UPDATE Posts
 							SET rented = 1
 							WHERE reid = pr_id_post;
-						SET SQL_SAFE_UPDATES = 0;
+						SET SQL_SAFE_UPDATES = 1;
 					COMMIT;
 					SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
 				ELSE 
