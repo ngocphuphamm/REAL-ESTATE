@@ -12,7 +12,7 @@ BEGIN
     
 	SET reid_need_update = (SELECT reid
 							FROM saveposts
-							WHERE userid = old.userid);
+							WHERE userid = old.userid AND reid = old.reid);
    
     IF reid_need_update IS NULL OR reid_need_update = '' THEN
 		SET msg =  concat('MyTriggerError: Trying to insert a negative value in tg_after_auto_update_reduce_viewcount: ',cast(old.reid as char));
