@@ -1,6 +1,4 @@
-const { json } = require('express/lib/response');
 const sequelize = require('../config/database');
-const Users = require('../models/users');
 module.exports = {
     loginView: async (req, res) => {
         if (req.cookies.userID) return res.redirect('/');
@@ -9,6 +7,8 @@ module.exports = {
     login: async (req, res) => {
         try {
             const { username, password } = req.body;
+            if (!username || !password)
+                throw new Error('Tên đăng nhập hoặc mật khẩu không được để trống');
             const user = await sequelize.query('CALL sp_Login (:pr_username, :pr_password)', {
                 replacements: {
                     pr_username: username,
@@ -33,6 +33,8 @@ module.exports = {
     register: async (req, res) => {
         try {
             const { name, username, password, email, phone } = req.body;
+            if (!name || !username || !password || !email || !phone)
+                throw new Error('Các trường không được để trống');
             const newUser = await sequelize.query(
                 'CALL sp_Register (:pr_username, :pr_password, :pr_name, :pr_email, :pr_phone)',
                 {
