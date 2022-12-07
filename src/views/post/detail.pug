@@ -45,13 +45,14 @@ block content
                 .d-flex.gap-5
                     .d-flex.flex-column
                         div.fw-light.fs-5 Mức giá
-                        div.fw-bold=post.detail.price
-                    .d-flex.flex-column
+                        div.fw-bold=post.detail.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})
                         div.fw-light.fs-5 Diện tích
                         div.fw-bold=post.detail.area+ ' m²'
                     .d-flex.flex-column
                         div.fw-light.fs-5 Phòng ngủ
                         div.fw-bold=post.convenients.bedroom+ " PN"
+                        div.fw-light.fs-5 Lượt yêu thích
+                        div.fw-bold=post.detail.viewCount
                     .d-flex.ms-auto.gap-2
                         i.fa.fa-thin.fa-share-nodes.fa-lg
                         i.fa.fa-thin.fa-triangle-exclamation.fa-lg( data-bs-toggle="modal" data-bs-target="#reportModal")
@@ -64,7 +65,7 @@ block content
                 div
                     h5 Đặc điểm bất động sản
                     span Loại tin đăng: 
-                    span= post.detail.categories
+                    span=post.detail.categories
                 .row
                     .col
                         .d-flex.gap-1
@@ -114,10 +115,7 @@ block content
                     div.fw-light Ngày đăng 
                     div.fw-bold=moment(post.detail.createdat).format("DD/MM/YY")
             hr 
-            .d-flex.flex-column.gap-3 
-                h5 Bất động sản dành cho bạn
             .d-flex.flex-column.gap-3
-                div
                 .d-flex.flex-column.gap-3
                     h5 Bình luận
                     textarea.form-control#comment-content

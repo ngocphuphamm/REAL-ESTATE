@@ -57,36 +57,51 @@ module.exports = {
                 },
                 include: [Medias],
             });
-            res.render('user/mypost', { posts: posts });
+            const rentedPosts = await Posts.findAll({
+                where: {
+                    userid: userID,
+                    rented: 1,
+                },
+                include: [Medias],
+            });
+            res.render('user/mypost', { posts, rentedPosts });
         } catch (err) {
             res.status(400).json({ success: false, message: err.message });
         }
     },
     updateRentedPost: async (req, res) => {
-        const { userID } = req.params;
-        const { postID } = req.body;
-        const posts = await Posts.findAll({
-            where: {
-                userid: userID,
-                rented: 0,
-            },
-            include: [Medias],
-        });
-
         try {
+            const { userID } = req.params;
+            const { postID } = req.body;
+            if (!userID || !postID) throw new Error('Cần phải đăng nhập để cập nhật bài đăng');
             await sequelize.query(`CALL sp_update_status_post (:pr_id_user , :pr_id_post)`, {
                 replacements: {
                     pr_id_user: userID,
                     pr_id_post: postID,
                 },
             });
+            const posts = await Posts.findAll({
+                where: {
+                    userid: userID,
+                    rented: 0,
+                },
+                include: [Medias],
+            });
+            const rentedPosts = await Posts.findAll({
+                where: {
+                    userid: userID,
+                    rented: 1,
+                },
+                include: [Medias],
+            });
 
             res.render('user/mypost', {
                 posts,
+                rentedPosts,
                 toast: 'Cập nhật trạng thái post thành công',
             });
         } catch (err) {
-            res.render('user/mypost', { posts, toast: err.message });
+            res.render('user/mypost', { toast: err.message });
         }
     },
     bookmark: async (req, res) => {

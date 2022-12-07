@@ -35,10 +35,10 @@ BEGIN
     
 	SELECT LENGTH(pr_contentrp) into isCheckLengthContent;
     
-    IF(isCheckLengthContent < 10) THEN
+    IF(isCheckLengthContent < 5) THEN
 		SELECT 0,"Nội dung không đủ để tố cáo";
     ELSEIF (isCheckReportUser > 0 ) THEN
-		SELECT 1,"Người dùng đã gửi tố cáo";
+		SELECT 0,"Người dùng đã gửi tố cáo";
 	ELSE
 		START TRANSACTION;
 			SET SQL_SAFE_UPDATES = 0;

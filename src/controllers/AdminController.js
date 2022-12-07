@@ -3,7 +3,10 @@ const sequelize = require('../config/database');
 module.exports = {
     user: async (req, res) => {
         try {
-            const users = await sequelize.query(`SELECT * FROM users`);
+            const { userID } = req.cookies;
+            const users = await sequelize.query(
+                `SELECT * FROM users WHERE userid NOT LIKE '${userID}'`
+            );
             res.render('admin/user', { users: users[0] });
         } catch (err) {
             res.render('admin/user', { toast: err.message });

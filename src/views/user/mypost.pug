@@ -1,15 +1,38 @@
 extends ../common/layout.pug 
 block content
     .d-flex.flex-column.gap-5
-        each post in posts 
-            .card.mb-3.w-100
-                .row.g-0
-                    .col-md-4
-                        img.img-fluid.rounded-start.w-100(src="/"+post.medias[0].dataValues.url alt='...')
-                    .col-md-8
-                        .card-body
-                            h5.card-title= post.title
-                            p.card-text= post.description
-                            form(method='POST')
-                                input(type="hidden" value=post.reid name="postID")
-                                button.btn.btn-dark Đã cho thuê
+        nav
+            #nav-tab.nav.nav-tabs(role='tablist')
+                button#nav-home-tab.nav-link.active(data-bs-toggle='tab' data-bs-target='#nav-home' type='button' role='tab' aria-controls='nav-home' aria-selected='true') Tin của tôi
+                button#nav-profile-tab.nav-link(data-bs-toggle='tab' data-bs-target='#nav-profile' type='button' role='tab' aria-controls='nav-profile' aria-selected='false') Tin đã cho thuê
+        #nav-tabContent.tab-content
+            #nav-home.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='nav-home-tab' tabindex='0')
+                .d-flex.flex-column.gap-5
+                    if(posts)
+                        each post in posts 
+                            .card.mb-3.w-100
+                                .row.g-0
+                                    .col-md-4
+                                        img.img-fluid.rounded-start.w-100(src="/"+post.medias[0].dataValues.url alt='...')
+                                    .col-md-8
+                                        .card-body
+                                            h5.card-title= post.title
+                                            p.card-text= post.description
+                                            form(method='POST')
+                                                input(type="hidden" value=post.reid name="postID")
+                                                button.btn.btn-dark(type="submit") Đã cho thuê
+            #nav-profile.tab-pane.fade(role='tabpanel' aria-labelledby='nav-profile-tab' tabindex='0')  
+                .d-flex.flex-column.gap-5
+                    if(rentedPosts)
+                        each post in rentedPosts 
+                            .card.mb-3.w-100
+                                .row.g-0
+                                    .col-md-4
+                                        img.img-fluid.rounded-start.w-100(src="/"+post.medias[0].dataValues.url alt='...')
+                                    .col-md-8
+                                        .card-body
+                                            h5.card-title= post.title
+                                            p.card-text= post.description
+                                            form(method='POST')
+                                                input(type="hidden" value=post.reid name="postID")
+                                                button.btn.btn-dark Đã cho thuê

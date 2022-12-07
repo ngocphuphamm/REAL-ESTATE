@@ -1,15 +1,9 @@
-const Posts = require('../models/posts');
-const Medias = require('../models/medias');
 const sequelize = require('../config/database');
-const { response } = require('express');
-const { FLOAT } = require('sequelize');
 module.exports = {
     home: async (req, res) => {
         try {
-            const posts = await sequelize.query(`SELECT *
-												FROM posts
-												`);
-            res.render('home/index', { posts: posts[0] });
+            const posts = await sequelize.query(`CALL sp_get_post`);
+            res.render('home/index', { posts: posts });
         } catch (err) {
             res.status(400).json({ message: err.message });
         }
@@ -84,7 +78,7 @@ module.exports = {
                     },
                 });
             }
-            if ((posts && posts[0] && posts[0][0] === 0) || !posts[0].reid) {
+            if (!posts || !posts[0] || posts[0][0] === 0 || !posts[0] || !posts[0].reid) {
                 return res.render('home/index', { posts: [] });
             }
             res.render('home/index', { posts: posts });

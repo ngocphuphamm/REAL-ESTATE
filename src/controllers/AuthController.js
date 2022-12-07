@@ -15,12 +15,16 @@ module.exports = {
                     pr_password: password,
                 },
             });
-            res.cookie('userID', user[0].userid, {
-                // expires: new Date(Date.now() + 900000),
-            });
+            const response = user[0];
+            if (response[0] === 0) {
+                return res.render('auth/login', {
+                    toast: 'Tên đăng nhập hoặc mật khẩu không đúng',
+                });
+            }
+            res.cookie('userID', response.userid);
             return res.redirect('/');
         } catch (err) {
-            res.status(400).json({ message: err.message });
+            res.render('auth/login', { toast: err.message });
         }
     },
     registerView: async (req, res) => {
@@ -29,7 +33,6 @@ module.exports = {
     register: async (req, res) => {
         try {
             const { name, username, password, email, phone } = req.body;
-
             const newUser = await sequelize.query(
                 'CALL sp_Register (:pr_username, :pr_password, :pr_name, :pr_email, :pr_phone)',
                 {
@@ -42,7 +45,11 @@ module.exports = {
                     },
                 }
             );
-            res.redirect('/auth/login');
+            const response = newUser[0];
+            if (response[1] === 1) {
+                return res.render('auth/login', { toast: 'Đăng kí thành công' });
+            }
+            res.render('auth/register', { toast: 'Tài khoản đã tồn tại' });
         } catch (err) {
             res.status(400).json({ message: err.message });
         }
