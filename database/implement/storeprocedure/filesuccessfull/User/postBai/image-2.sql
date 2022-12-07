@@ -18,7 +18,7 @@ BEGIN
     
     IF isExitsREID <= 0 THEN
 		SELECT "REID không tồn tại";
-    ELSEIF isQty > 15 THEN
+    ELSEIF isQty > 5 THEN
 		SELECT "Số hình đã vượt quá";
 	ELSE
 		START TRANSACTION;
