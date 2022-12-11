@@ -41,7 +41,6 @@ const renderAuth = async () => {
 			<div class="d-flex align-items-center gap-3">
 				<a href="/auth/login" class="text-dark text-decoration-none">Đăng nhập</a>
 				<a href="/auth/register" class="text-dark text-decoration-none">Đăng ký</a>
-				<a href="/post" class="btn btn-outline-dark">Đăng tin</a>
 			</div>
             `
         );
