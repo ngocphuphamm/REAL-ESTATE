@@ -4,7 +4,7 @@ const validateToken = require('../middlewares/ValidateToken');
 const router = express.Router();
 const upload = require('../middlewares/upload');
 router.get('/', validateToken, postController.postView);
-router.post('/', validateToken, upload.array('medias', 4), postController.uploadPost);
+router.post('/', validateToken, upload.array('medias', 5), postController.uploadPost);
 router.post('/bookmark', validateToken, postController.sendBookMark);
 router.post('/:id/comment', validateToken, postController.addComment);
 router.post('/:id/report', postController.sendReport);

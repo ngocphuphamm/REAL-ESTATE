@@ -16,10 +16,16 @@ const getDetail = async (id) => {
             pr_reid: id,
         },
     });
+    const comments = await sequelize.query('CALL sp_get_comments(:pr_reid)', {
+        replacements: {
+            pr_reid: id,
+        },
+    });
     return {
         convenients: convenients[0],
         detail: detail[0],
         medias,
+        comments,
     };
 };
 

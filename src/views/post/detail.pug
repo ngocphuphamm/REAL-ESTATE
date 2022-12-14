@@ -120,11 +120,11 @@ block content
                     h5 Bình luận
                     textarea.form-control#comment-content
                     button.btn.btn-outline-dark.ms-auto#add-comment-btn.ms-auto Thêm bình luận
-                if(comments.length > 0)
-                    each comment in comments
+                if(post.comments.length > 0)
+                    each comment in post.comments
                         .p-3.d-flex.gap-4.align-items-center
                             img.rounded-circle(src="https://picsum.photos/80" alt="avatar")
-                            div.fw-bold=comment.user.name
+                            div.fw-bold=comment.username
                             div=comment.content
                             div=moment(comment.createdat).startOf('day').fromNow()
         .col-3

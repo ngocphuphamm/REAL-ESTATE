@@ -93,13 +93,9 @@ module.exports = {
         try {
             const { id } = req.params;
             const post = await getDetail(id);
-            const comments = await Comments.findAll({
-                include: Users,
-            });
             res.render('post/detail', {
                 post,
-                moment,
-                comments,
+                moment
             });
         } catch (err) {
             res.status(400).json({ message: err.message });
