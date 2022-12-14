@@ -36,7 +36,7 @@ BEGIN
 		SET msg =  concat('MyTriggerError: Trying to insert a negative value address in tg_before_validate_post: ', cast(new.provinceid as char));
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = msg;
-	ELSEIF length(new.phone) < 9 THEN
+	ELSEIF length(new.phone) < 9 OR length(new.phone) > 10  THEN
 		SET msg =  concat('MyTriggerError: Trying to insert a negative value  phone in tg_before_validate_post: ', cast(new.phone as char));
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = msg;
