@@ -41,4 +41,37 @@ GRANT SELECT ON bds.ward TO 'RE_KhachHangThanThiet';
 GRANT SELECT ON bds.* TO 'RE_KhachHangVangLai';
 
 
+
+GRANT EXECUTE ON PROCEDURE bds.sp_Report TO 'RE_KhachHangThanThiet';
+GRANT EXECUTE ON PROCEDURE bds.sp_Register TO 'RE_KhachHangThanThiet';
+GRANT EXECUTE ON PROCEDURE bds.sp_update_status_post TO 'RE_KhachHangThanThiet';
+GRANT EXECUTE ON PROCEDURE bds.sp_get_listMedias TO 'RE_KhachHangThanThiet';
+GRANT EXECUTE ON PROCEDURE bds.sp_show_detail_info TO 'RE_KhachHangThanThiet';
+GRANT EXECUTE ON PROCEDURE bds.sp_get_convenient TO 'RE_KhachHangThanThiet';
+GRANT EXECUTE ON PROCEDURE bds.sp_search_keyword TO 'RE_KhachHangThanThiet';
+GRANT EXECUTE ON PROCEDURE bds.sp_Province_Posts TO 'RE_KhachHangThanThiet';
+GRANT EXECUTE ON PROCEDURE bds.sp_Province_District_Posts TO 'RE_KhachHangThanThiet';
+GRANT EXECUTE ON PROCEDURE bds.sp_Province_District_Ward_Posts TO 'RE_KhachHangThanThiet';
+GRANT EXECUTE ON PROCEDURE bds.sp_Project TO 'RE_KhachHangThanThiet';
+GRANT EXECUTE ON PROCEDURE bds.sp_Project_Province TO 'RE_KhachHangThanThiet';
+GRANT EXECUTE ON PROCEDURE bds.sp_Project_Province_District TO 'RE_KhachHangThanThiet';
+GRANT EXECUTE ON PROCEDURE bds.sp_Province_District_Ward_Street_Posts TO 'RE_KhachHangThanThiet';
+GRANT EXECUTE ON PROCEDURE bds.sp_get_post TO 'RE_KhachHangThanThiet';
+GRANT EXECUTE ON PROCEDURE bds.sp_savePosts TO 'RE_KhachHangThanThiet';
+GRANT EXECUTE ON PROCEDURE bds.sp_Edit_User TO 'RE_KhachHangThanThiet';
+GRANT EXECUTE ON PROCEDURE bds.sp_Comment TO 'RE_KhachHangThanThiet';
+
+
+GRANT EXECUTE ON PROCEDURE bds.sp_return_list_posts TO 'RE_QuanLy';
+GRANT EXECUTE ON PROCEDURE bds.sp_bans_post TO 'RE_QuanLy';
+GRANT EXECUTE ON PROCEDURE bds.sp_return_list_posts_blocked TO 'RE_QuanLy';
+GRANT EXECUTE ON PROCEDURE bds.sp_recovery_post TO 'RE_QuanLy';
+GRANT EXECUTE ON PROCEDURE bds.sp_block_user TO 'RE_QuanLy';
+GRANT EXECUTE ON PROCEDURE bds.sp_return_list_users TO 'RE_QuanLy';
+GRANT EXECUTE ON PROCEDURE bds.sp_recovery_user TO 'RE_QuanLy';
+
+
+
+
+
 SHOW grants FOR  'RE_QuanLy';
