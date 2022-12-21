@@ -72,7 +72,9 @@ CREATE PROCEDURE sp_postFeed(pr_categoryid varchar(200), pr_title varchar(200), 
 					        , pr_price decimal(15,2), pr_area varchar(100)
                             , pr_phone varchar(20),pr_address varchar(150), pr_userid varchar(200)
                             , pr_projectid char(20), pr_streetid int, pr_wardid int, pr_districtid int
-                            , pr_provinceid int) 
+                            , pr_provinceid int,pr_bedroom int, pr_bathroom int,pr_floor int
+                            , pr_direction text, pr_balconyDirection text, pr_furniture text
+                            , pr_fontageArea int) 
 BEGIN	
     DECLARE isExists INT DEFAULT -1;
         
@@ -102,6 +104,12 @@ BEGIN
 					 , pr_price , pr_area, pr_phone, pr_address ,pr_userid
 					, pr_projectid, pr_streetid, pr_wardid, pr_districtid
 					, pr_provinceid);
+			INSERT INTO convenient(convenientid, reid, bedroom, bathroom
+									, floor, direction
+									, balconyDirection, furniture, fontageArea)
+			VALUES (uuid(),id_post , pr_bedroom , pr_bathroom , 
+					pr_floor , pr_direction , pr_balconyDirection ,
+					pr_furniture , pr_fontageArea );
 			SET SQL_SAFE_UPDATES = 1;
 		COMMIT;
 

@@ -6,7 +6,7 @@ DROP PROCEDURE IF EXISTS sp_return_list_users_blocked $$
 CREATE PROCEDURE sp_return_list_users_blocked(pr_id_user varchar(50)) 
 BEGIN	
 	DECLARE is_admin INT DEFAULT 0;
-	SET is_admin = fnc_checkAuthorization(pr_id_user);
+	SET is_admin = fnc_check_authorization(pr_id_user);
 	IF is_admin = 1 THEN 
 		SELECT *  
         FROM users u
