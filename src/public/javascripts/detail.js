@@ -22,14 +22,16 @@ const sendBookMark = async () => {
         const data = await res.json();
         const response = data[0];
         if (!response) throw new Error(data.message);
-        if (response && response.savePost_id_exists) {
-            return toast.fire({ title: 'Bạn đã hủy lưu tin', icon: 'warning' });
+        const conditionShowToast = response && response.savePost_id_exists;
+        if (conditionShowToast) {
+            toast.fire({ title: 'Bạn đã hủy lưu tin', icon: 'warning' });
         } else {
-            return toast.fire({
+            toast.fire({
                 title: 'Bạn đã lưu tin thành công',
                 icon: 'success',
             });
         }
+        return window.location.reload();
     } catch (err) {
         toast.fire({ title: err.message, icon: 'error' });
     }
