@@ -10,6 +10,7 @@ BEGIN
 	DECLARE msg VARCHAR(200);
 	DECLARE check_address  INT DEFAULT -1; 
 	DECLARE count_posts INT DEFAULT -1;
+    DECLARE checked_duplicate_name INT DEFAULT -1; 
     
     SELECT  COUNT(*) INTO check_address
     FROM province p JOIN (SELECT districtid, provinceid
@@ -28,6 +29,10 @@ BEGIN
     FROM posts p 
     WHERE MONTH(p.createdat) = month(CURRENT_DATE()) AND p.userid = new.userid;
     
+    SELECT COUNT(*) INTO checked_duplicate_name
+    FROM posts p 
+    WHERE p.title = new.title AND p.userid = new.userid;
+    
     IF new.price < 100   THEN 
 		SET msg =  concat('MyTriggerError: Trying to insert a negative price  in tg_before_validate_post: ', cast(new.price as char));
         SIGNAL SQLSTATE '45000'
@@ -40,6 +45,10 @@ BEGIN
 		SET msg =  concat('MyTriggerError: Trying to insert a negative value  phone in tg_before_validate_post: ', cast(new.phone as char));
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = msg;
+	ELSEIF checked_duplicate_name > 0 THEN 
+		SET msg =  concat('MyTriggerError: Trying to insert a negative value  TITLE in tg_before_validate_post: ', cast(new.title as char));
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = msg;
 	ELSEIF count_posts > 5 THEN
 		SET msg =  concat('MyTriggerError: Trying to insert a negative value count post in tg_before_validate_post: ', cast(count_posts as char));
         SIGNAL SQLSTATE '45000'
@@ -49,5 +58,3 @@ BEGIN
 END $$
  DELIMITER ;
  
- 
-   

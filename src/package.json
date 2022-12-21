@@ -21,5 +21,8 @@
 		"sequelize": "^6.25.2",
 		"sequelize-auto": "^0.8.8",
 		"sweetalert2": "^11.6.8"
+	},
+	"devDependencies": {
+		"method-override": "^3.0.0"
 	}
 }

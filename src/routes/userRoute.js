@@ -6,6 +6,7 @@ router.post('/:userID', userController.edit);
 router.get('/:userID', userController.detail);
 router.get('/:userID/myPost', userController.myPost);
 router.post('/:userID/myPost', userController.updateRentedPost);
+router.delete('/:userID/myPost', userController.removePost);
 router.get('/:userID/bookmark', userController.bookmark);
 router.get('/detailApi/:userID', userController.detailApi);
 

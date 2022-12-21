@@ -3,7 +3,7 @@ const sequelize = require('../config/database');
 const SavePosts = require('../models/savePosts');
 const Posts = require('../models/posts');
 const Medias = require('../models/medias');
-
+const { getListPostOfUser } = require('../utils/post');
 module.exports = {
     detail: async (req, res) => {
         try {
@@ -50,20 +50,7 @@ module.exports = {
     myPost: async (req, res) => {
         try {
             const { userID } = req.params;
-            const posts = await Posts.findAll({
-                where: {
-                    userid: userID,
-                    rented: 0,
-                },
-                include: [Medias],
-            });
-            const rentedPosts = await Posts.findAll({
-                where: {
-                    userid: userID,
-                    rented: 1,
-                },
-                include: [Medias],
-            });
+            const { posts, rentedPosts } = await getListPostOfUser(userID);
             res.render('user/mypost', { posts, rentedPosts });
         } catch (err) {
             res.status(400).json({ success: false, message: err.message });
@@ -80,25 +67,33 @@ module.exports = {
                     pr_id_post: postID,
                 },
             });
-            const posts = await Posts.findAll({
-                where: {
-                    userid: userID,
-                    rented: 0,
-                },
-                include: [Medias],
-            });
-            const rentedPosts = await Posts.findAll({
-                where: {
-                    userid: userID,
-                    rented: 1,
-                },
-                include: [Medias],
-            });
 
+            const { posts, rentedPosts } = await getListPostOfUser(userID);
             res.render('user/mypost', {
                 posts,
                 rentedPosts,
                 toast: 'Cập nhật trạng thái post thành công',
+            });
+        } catch (err) {
+            res.render('user/mypost', { toast: err.message });
+        }
+    },
+    removePost: async (req, res) => {
+        try {
+            const { userID } = req.params;
+            const { postID } = req.body;
+            if (!userID || !postID) throw new Error('Cần phải đăng nhập để cập nhật bài đăng');
+            await sequelize.query(`CALL sp_remove_feed (:pr_reid, :pr_userid)`, {
+                replacements: {
+                    pr_reid: postID,
+                    pr_userid: userID,
+                },
+            });
+            const { posts, rentedPosts } = await getListPostOfUser(userID);
+            res.render('user/mypost', {
+                posts,
+                rentedPosts,
+                toast: 'Xóa bài đăng thành công',
             });
         } catch (err) {
             res.render('user/mypost', { toast: err.message });

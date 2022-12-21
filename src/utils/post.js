@@ -1,4 +1,7 @@
 const sequelize = require('../config/database');
+const Posts = require('../models/posts');
+const Medias = require('../models/medias');
+
 module.exports = {
     excPost: async ({
         categoryid,
@@ -67,5 +70,22 @@ module.exports = {
                 });
             });
         }
+    },
+    getListPostOfUser: async (userID) => {
+        const posts = await Posts.findAll({
+            where: {
+                userid: userID,
+                rented: 0,
+            },
+            include: [Medias],
+        });
+        const rentedPosts = await Posts.findAll({
+            where: {
+                userid: userID,
+                rented: 1,
+            },
+            include: [Medias],
+        });
+        return { posts, rentedPosts };
     },
 };
