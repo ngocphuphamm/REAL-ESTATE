@@ -53,7 +53,7 @@ module.exports = {
             }
             res.render('auth/register', { toast: 'Tài khoản đã tồn tại' });
         } catch (err) {
-            res.status(400).json({ message: err.message });
+            res.render('auth/register', { toast: err.message });
         }
     },
     async logout(req, res) {

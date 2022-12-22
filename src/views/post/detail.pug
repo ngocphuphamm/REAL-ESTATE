@@ -24,14 +24,12 @@ block content
                         button.btn.btn-primary(type='submit') Gửi
     .row
         .col.d-flex.flex-column.gap-3
-            #carouselExampleControls.carousel.slide.rounded.shadow.mb-3(data-bs-ride='carousel')
-                .carousel-indicators
-                    button.active(type='button' data-bs-target='#carouselExampleIndicators' data-bs-slide-to='0' aria-current='true' aria-label='Slide 1')
-                    button(type='button' data-bs-target='#carouselExampleIndicators' data-bs-slide-to='1' aria-label='Slide 2')
-                    button(type='button' data-bs-target='#carouselExampleIndicators' data-bs-slide-to='2' aria-label='Slide 3')
+            #carouselExampleControls.carousel.slide.shadow.p-1.border.border-dark(data-bs-ride='carousel')
                 .carousel-inner
                     .carousel-item.active
-                        img.d-block.w-100(src="/"+post.medias[0].url alt="")
+                        img.d-block.w-100.img-fluid(src="/"+post.medias[0].url alt="")
+                    .carousel-item
+                        img.d-block.w-100.img-fluid(src='/'+post.medias[1].url alt='...')
                 button.carousel-control-prev(type='button' data-bs-target='#carouselExampleControls' data-bs-slide='prev')
                     span.carousel-control-prev-icon(aria-hidden='true')
                     span.visually-hidden Previous
@@ -122,10 +120,10 @@ block content
                     button.btn.btn-outline-dark.ms-auto#add-comment-btn.ms-auto Thêm bình luận
                 if(post.comments.length > 0)
                     each comment in post.comments
-                        .p-3.d-flex.gap-4.align-items-center
+                        .p-4.d-flex.gap-4.align-items-center.shadow.rounded
                             img.rounded-circle(src="https://picsum.photos/80" alt="avatar")
                             div.fw-bold=comment.username
-                            div=comment.content
+                            div.border.rounded.p-2=comment.content
                             div=moment(comment.createdat).startOf('day').fromNow()
         .col-3
     script(type="text/javascript" src="/public/javascripts/detail.js")

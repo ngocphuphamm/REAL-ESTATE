@@ -5,13 +5,12 @@ module.exports = {
             const posts = await sequelize.query(`CALL sp_get_post`);
             res.render('home/index', { posts: posts });
         } catch (err) {
-            res.status(400).json({ message: err.message });
+            res.render('home/index', { toast: err.message });
         }
     },
     search: async (req, res) => {
         try {
             const { provinceid, districtid, wardid, streetid, projectid, keyword } = req.query;
-
             let posts;
             if (keyword && !provinceid && !districtid && !wardid && !streetid && !projectid) {
                 if (!keyword) return;
@@ -43,7 +42,7 @@ module.exports = {
                         replacements: {
                             pr_province_id: provinceid,
                             pr_district_id: districtid,
-                            pr_street_id: streetid,
+                            pr_ward_id: wardid,
                         },
                     }
                 );
@@ -71,12 +70,15 @@ module.exports = {
                     }
                 );
             } else if (provinceid && projectid && !districtid && !wardid && !streetid) {
-                posts = await sequelize.query(`CALL sp_Project_Province`, {
-                    replacements: {
-                        pr_province_id: provinceid,
-                        pr_project_id: projectid,
-                    },
-                });
+                posts = await sequelize.query(
+                    `CALL sp_Project_Province(:pr_project_id,:pr_province_id) `,
+                    {
+                        replacements: {
+                            pr_province_id: provinceid,
+                            pr_project_id: projectid,
+                        },
+                    }
+                );
             }
             if (!posts || !posts[0] || posts[0][0] === 0 || !posts[0] || !posts[0].reid) {
                 return res.render('home/index', { posts: [] });

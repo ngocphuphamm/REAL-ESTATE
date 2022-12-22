@@ -18,12 +18,13 @@ block content
                                         .card-body
                                             h5.card-title= post.title
                                             p.card-text= post.description
-                                            form(method='POST')
-                                                input(type="hidden" value=post.reid name="postID")
-                                                button.btn.btn-dark(type="submit") Đã cho thuê
-                                            form(method='POST' action=`myPost?_method=DELETE`)
-                                                input(type="hidden" value=post.reid name="postID")
-                                                button.btn.btn-dark(type="submit") Xóa bài đăng
+                                            .d-flex.gap-3.justify-content-end
+                                                form(method='POST')
+                                                    input(type="hidden" value=post.reid name="postID")
+                                                    button.btn.btn-dark(type="submit") Đã cho thuê
+                                                form(method='POST' action=`myPost?_method=DELETE`)
+                                                    input(type="hidden" value=post.reid name="postID")
+                                                    button.btn.btn-dark(type="submit") Xóa bài đăng
             #nav-profile.tab-pane.fade(role='tabpanel' aria-labelledby='nav-profile-tab' tabindex='0')  
                 .d-flex.flex-column.gap-5
                     if(rentedPosts)

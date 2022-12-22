@@ -30,7 +30,6 @@ module.exports = {
             } else {
                 spName = `sp_recovery_user`;
             }
-            console.log(spName);
             if (!spName) return res.render('admin/user', { toast: err.message });
             await sequelize.query(`CALL ${spName}(:pr_id_user , :pr_id_user_block)`, {
                 replacements: {
@@ -53,7 +52,6 @@ module.exports = {
             } else {
                 spName = `sp_recovery_post`;
             }
-            console.log(spName);
             if (!spName) return res.render('admin/user', { toast: err.message });
             await sequelize.query(`CALL ${spName}(:pr_id_user , :pr_id_post)`, {
                 replacements: {

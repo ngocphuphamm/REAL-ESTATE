@@ -1,6 +1,6 @@
 const Users = require('../models/users');
 const sequelize = require('../config/database');
-const SavePosts = require('../models/savePosts');
+const savePosts = require('../models/savePosts');
 const Posts = require('../models/posts');
 const Medias = require('../models/medias');
 const { getListPostOfUser } = require('../utils/post');
@@ -103,7 +103,7 @@ module.exports = {
         try {
             const { userID } = req.params;
             const arrPost = [];
-            const bookmark = await SavePosts.findAll({
+            const bookmark = await savePosts.findAll({
                 where: {
                     userid: userID,
                 },
