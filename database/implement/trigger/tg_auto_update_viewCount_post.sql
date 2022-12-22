@@ -4,7 +4,7 @@ DROP TRIGGER IF EXISTS tg_after_auto_update_viewcount;
 DELIMITER $$
 CREATE TRIGGER tg_after_auto_update_viewcount
 after INSERT
-ON saveposts FOR EACH ROW
+ON savePosts FOR EACH ROW
 BEGIN
 	DECLARE reid_need_update CHAR (40) DEFAULT NULL;
 	DECLARE msg VARCHAR(200);
@@ -30,7 +30,7 @@ BEGIN
 END $$
  DELIMITER ;
  
-INSERT INTO saveposts(savePostId,reid, userid)
+INSERT INTO savePosts(savePostId,reid, userid)
 	VALUES (uuid(),'3f4e3910-73ee-11ed-b4c1-c8b29b839518','83bac6b8-7617-11ed-b4c1-c8b29b839518');
  
  SELECT * 

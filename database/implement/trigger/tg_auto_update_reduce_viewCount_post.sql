@@ -4,14 +4,14 @@ DROP TRIGGER IF EXISTS tg_after_auto_update_reduce_viewcount;
 DELIMITER $$
 CREATE TRIGGER tg_after_auto_update_reduce_viewcount
 before DELETE
-ON saveposts FOR EACH ROW
+ON savePosts FOR EACH ROW
 BEGIN
 	DECLARE reid_need_update CHAR (40) DEFAULT NULL;
 	DECLARE msg VARCHAR(200);
 	DECLARE quantity_save INT DEFAULT -1;
     
 	SET reid_need_update = (SELECT reid
-							FROM saveposts
+							FROM savePosts
 							WHERE userid = old.userid AND reid = old.reid);
    
     IF reid_need_update IS NULL OR reid_need_update = '' THEN
@@ -38,13 +38,13 @@ END $$
  DELIMITER ;
 
  DELETE 
- FROM saveposts
+ FROM savePosts
  WHERE userid = '83bac6b8-7617-11ed-b4c1-c8b29b839518';
  
- INSERT INTO saveposts(savePostId,reid,userid)
+ INSERT INTO savePosts(savePostId,reid,userid)
 		VALUES(uuid(),'3f4e3910-73ee-11ed-b4c1-c8b29b839518','83bac6b8-7617-11ed-b4c1-c8b29b839518');
   
- INSERT INTO saveposts(savePostId,reid,userid)
+ INSERT INTO savePosts(savePostId,reid,userid)
 		VALUES(uuid(),'3f4e3910-73ee-11ed-b4c1-c8b29b839518','028f405e-73ee-11ed-b4c1-c8b29b839518');
  
  UPDATE POSTS 
@@ -58,10 +58,10 @@ END $$
  from users;
  
  SELECT * 
- FROM saveposts;
+ FROM savePosts;
  
  DELETE 
- FROM saveposts
+ FROM savePosts
  WHERE reid = '3f4e3910-73ee-11ed-b4c1-c8b29b839518';
  
  UPDATE posts

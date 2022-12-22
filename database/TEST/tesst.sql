@@ -80,7 +80,7 @@ SELECT * FROM POSTS;
 select *  from users;
 CALL sp_savePosts("77ebde3d-634d-11ed-b1d9-00155d87afbf","d5ef3568-634c-11ed-b1d9-00155d87afbf");
 --
-select * from saveposts;
+select * from savePosts;
 call sp_cancel_savePost("9060cdb0-634d-11ed-b1d9-00155d87afbf");
 select @@transaction_isolation;
 --

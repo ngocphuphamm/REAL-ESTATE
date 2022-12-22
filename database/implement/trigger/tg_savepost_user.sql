@@ -4,7 +4,7 @@ DROP TRIGGER IF EXISTS tg_before_validate_save_user;
 DELIMITER $$
 CREATE TRIGGER tg_before_validate_save_user
 BEFORE INSERT
-ON saveposts FOR EACH ROW
+ON savePosts FOR EACH ROW
 BEGIN
 	DECLARE msg VARCHAR(200);
     DECLARE is_user_save INT DEFAULT -1;
@@ -12,7 +12,7 @@ BEGIN
     SET msg =  concat('MyTriggerError: Trying to insert a negative value in tg_before_validate_save_user: ', cast(new.userid as char));
 	
     SELECT COUNT(*) INTO is_user_save
-    FROM saveposts
+    FROM savePosts
     WHERE reid = new.reid AND  userid = new.userid;
 
     

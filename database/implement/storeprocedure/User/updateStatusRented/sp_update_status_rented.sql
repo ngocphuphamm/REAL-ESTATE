@@ -29,7 +29,7 @@ BEGIN
 					SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 					START TRANSACTION;
 						SET SQL_SAFE_UPDATES = 0;
-							UPDATE Posts
+							UPDATE posts
 							SET rented = 1
 							WHERE reid = pr_id_post;
 						SET SQL_SAFE_UPDATES = 1;

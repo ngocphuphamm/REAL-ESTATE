@@ -35,7 +35,7 @@ BEGIN
                 FROM convenient
                 WHERE reid  = pr_reid;
                 DELETE 
-                FROM saveposts
+                FROM savePosts
                 WHERE reid = pr_reid;
                 DELETE 
                 FROM report

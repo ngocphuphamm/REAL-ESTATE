@@ -7,7 +7,7 @@ GRANT SELECT,INSERT, UPDATE, DELETE ON bds.posts TO 'RE_KhachHangThanThiet';
 GRANT SELECT ON bds.project TO 'RE_KhachHangThanThiet';
 GRANT SELECT ON bds.province TO 'RE_KhachHangThanThiet';
 GRANT SELECT,INSERT ON bds.report TO 'RE_KhachHangThanThiet';
-GRANT SELECT,INSERT, DELETE ON bds.saveposts TO 'RE_KhachHangThanThiet';
+GRANT SELECT,INSERT, DELETE ON bds.savePosts TO 'RE_KhachHangThanThiet';
 GRANT SELECT ON bds.street TO 'RE_KhachHangThanThiet';
 GRANT SELECT,INSERT, UPDATE ON bds.users TO 'RE_KhachHangThanThiet';
 GRANT SELECT ON bds.ward TO 'RE_KhachHangThanThiet';
