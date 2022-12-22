@@ -74,15 +74,16 @@ CREATE PROCEDURE sp_postFeed(pr_categoryid varchar(200), pr_title varchar(200), 
                             , pr_projectid char(20), pr_streetid int, pr_wardid int, pr_districtid int
                             , pr_provinceid int,pr_bedroom int, pr_bathroom int,pr_floor int
                             , pr_direction text, pr_balconyDirection text, pr_furniture text
-                            , pr_fontageArea int) 
+                            , pr_fontageArea int, pr_firstImage text, pr_secondImage text, pr_thirdImage text) 
 BEGIN	
     DECLARE isExists INT DEFAULT -1;
         
 	DECLARE isCheckAddress INT DEFAULT -1;
 	
     DECLARE isCheckUserID INT DEFAULT -1;
-   
+	DECLARE qtyImages INT DEFAULT 0;
 	DECLARE id_post char(40);
+    DECLARE EXIT HANDLER FOR EXCEPTION ROLLBACK;
     
     SELECT COUNT(*) INTO isExists FROM categories c WHERE c.categoryid = pr_categoryid;
     
@@ -96,6 +97,7 @@ BEGIN
 	ELSE
 		set id_post = uuid();
         START TRANSACTION;
+			
 			SET SQL_SAFE_UPDATES = 0;
 			INSERT INTO posts (reid, categoryid, title, description, price
 								, area, phone, address, userid, projectid
@@ -111,11 +113,21 @@ BEGIN
 					pr_floor , pr_direction , pr_balconyDirection ,
 					pr_furniture , pr_fontageArea );
 			SET SQL_SAFE_UPDATES = 1;
-		COMMIT;
+            
+			INSERT INTO medias(mediaid ,url,reid)
+			VALUES (uuid(),pr_firstImage,id_post);
 
+			INSERT INTO medias(mediaid ,url,reid)
+			VALUES (uuid(),pr_secondImage,id_post);
+
+			INSERT INTO medias(mediaid ,url,reid)
+			VALUES (uuid(),pr_thirdImage,id_post);
+	
+			COMMIT;
 
         SELECT id_post;
 	END IF; 
+    
 END; $$
 select @@transaction_isolation;
 
