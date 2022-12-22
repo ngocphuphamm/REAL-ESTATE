@@ -60,12 +60,16 @@ module.exports = {
                 spName = `sp_recovery_post`;
             }
             if (!spName) return res.render('admin/user', { toast: err.message });
-            await sequelize.query(`CALL ${spName}(:pr_id_user , :pr_id_post)`, {
+            const response = await sequelize.query(`CALL ${spName}(:pr_id_user , :pr_id_post)`, {
                 replacements: {
                     pr_id_user: userID,
                     pr_id_post: spName === 'sp_bans_post' ? postToBlock : postToRecovery,
                 },
             });
+            const status = response[0].status;
+            if (status == 0) {
+                throw new Error(response[0].message);
+            }
             return res.redirect('/admin/post');
         } catch (err) {
             res.render('admin/post', { toast: err.message });
