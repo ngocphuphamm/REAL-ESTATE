@@ -31,12 +31,19 @@ module.exports = {
                 spName = `sp_recovery_user`;
             }
             if (!spName) return res.render('admin/user', { toast: err.message });
-            await sequelize.query(`CALL ${spName}(:pr_id_user , :pr_id_user_block)`, {
-                replacements: {
-                    pr_id_user: userID,
-                    pr_id_user_block: spName === 'sp_block_user' ? userToBlock : userToRecovery,
-                },
-            });
+            const response = await sequelize.query(
+                `CALL ${spName}(:pr_id_user , :pr_id_user_block)`,
+                {
+                    replacements: {
+                        pr_id_user: userID,
+                        pr_id_user_block: spName === 'sp_block_user' ? userToBlock : userToRecovery,
+                    },
+                }
+            );
+            const status = response[0].status;
+            if (status == 0) {
+                throw new Error(response[0].message);
+            }
             res.redirect('/admin/user');
         } catch (err) {
             res.render('admin/user', { toast: err.message });
