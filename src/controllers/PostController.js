@@ -10,54 +10,15 @@ module.exports = {
     },
     uploadPost: async (req, res) => {
         try {
-            const {
-                categoryid,
-                title,
-                description,
-                price,
-                area,
-                address,
-                phone,
-                projectid,
-                streetid,
-                wardid,
-                districtid,
-                provinceid,
-                bedroom,
-                bathroom,
-                floor,
-                direction,
-                balconyDirection,
-                furniture,
-                fontageArea,
-            } = req.body;
             const models = {
-                categoryid,
-                title,
-                description,
-                price,
-                area,
-                address,
-                phone,
-                projectid,
-                streetid,
-                wardid,
-                districtid,
-                provinceid,
-                bedroom,
-                bathroom,
-                floor,
-                direction,
-                balconyDirection,
-                furniture,
-                fontageArea,
+                ...req.body,
                 userID: req.cookies.userID,
                 files: req.files,
             };
             await excPost(models);
             res.redirect('/');
         } catch (err) {
-            res.status(400).json({ message: err.message });
+            res.render('post/index', { toast: err });
         }
     },
     detail: async (req, res) => {

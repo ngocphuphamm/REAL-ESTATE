@@ -34,7 +34,7 @@ module.exports = {
                   :pr_price, :pr_area, :pr_phone , :pr_address, :pr_userid,
                   :pr_projectid, :pr_streetid , :pr_wardid, :pr_districtid,
                   :pr_provinceid,:pr_bedroom, :pr_bathroom,:pr_floor, 
-                  :pr_direction, :pr_balconyDirection, :pr_furniture, :pr_fontageArea)`,
+                  :pr_direction, :pr_balconyDirection, :pr_furniture, :pr_fontageArea, :pr_firstImage , :pr_secondImage , :pr_thirdImage)`,
             {
                 replacements: {
                     pr_categoryid: categoryid,
@@ -57,19 +57,12 @@ module.exports = {
                     pr_balconyDirection: balconyDirection,
                     pr_furniture: furniture,
                     pr_fontageArea: fontageArea,
+                    pr_firstImage: files[0].path,
+                    pr_secondImage: files[1].path,
+                    pr_thirdImage: files[2].path,
                 },
             }
         );
-        if (files.length > 0) {
-            files.forEach(async (file) => {
-                await sequelize.query(`CALL sp_insert_medias (:pr_reid, :pr_url)`, {
-                    replacements: {
-                        pr_reid: newPost[0].id_post,
-                        pr_url: file.path,
-                    },
-                });
-            });
-        }
     },
     getListPostOfUser: async (userID) => {
         const posts = await Posts.findAll({
