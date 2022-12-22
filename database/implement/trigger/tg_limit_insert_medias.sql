@@ -13,7 +13,7 @@ BEGIN
 						   FROM  medias
 						   WHERE reid = new.reid);
    
-    IF quantity_medias = 5  THEN
+    IF quantity_medias > 2  THEN
 		SET msg =  concat('MyTriggerError: Trying to insert a negative value in tg_before_limit_insert_medias: ',cast(new.reid as char));
 		SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = msg;
@@ -23,11 +23,16 @@ END $$
  DELIMITER ;
  
  
-INSERT MEDIAS(MEDIAID,URL,REID)
-	VALUES(uuid(),'123','3f4e3910-73ee-11ed-b4c1-c8b29b839518');
- 
- 
- 
+INSERT medias(mediaid,url,reid)
+	VALUES(uuid(),'123','d2cce737-8227-11ed-918e-0242ac110004');
+ INSERT medias(mediaid,url,reid)
+	VALUES(uuid(),'123','d2cce737-8227-11ed-918e-0242ac110004');
+ INSERT medias(mediaid,url,reid)
+	VALUES(uuid(),'123','d2cce737-8227-11ed-918e-0242ac110004');
+ INSERT medias(mediaid,url,reid)
+	VALUES(uuid(),'123','d2cce737-8227-11ed-918e-0242ac110004');
+INSERT medias(mediaid,url,reid)
+	VALUES(uuid(),'123','d2cce737-8227-11ed-918e-0242ac110004');
  select *
  from posts;
  
