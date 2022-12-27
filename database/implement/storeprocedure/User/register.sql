@@ -29,8 +29,8 @@ BEGIN
 		SET pw= fnc_SHAPassword(pr_password, privateKey);
 		START TRANSACTION;
 			SET SQL_SAFE_UPDATES = 0;
-			INSERT INTO users(userid ,name,username,email,password,phone)
-			VALUES (privateKey,pr_name,pr_username,pr_email,pw,pr_phone);
+				INSERT INTO users(userid ,name,username,email,password,phone)
+				VALUES (privateKey,pr_name,pr_username,pr_email,pw,pr_phone);
             SET SQL_SAFE_UPDATES = 1;
 		COMMIT;
         

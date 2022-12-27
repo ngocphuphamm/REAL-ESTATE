@@ -13,7 +13,7 @@ BEGIN
 						   FROM  medias
 						   WHERE reid = new.reid);
    
-    IF quantity_medias > 2  THEN
+    IF quantity_medias > 3  THEN
 		SET msg =  concat('MyTriggerError: Trying to insert a negative value in tg_before_limit_insert_medias: ',cast(new.reid as char));
 		SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = msg;
