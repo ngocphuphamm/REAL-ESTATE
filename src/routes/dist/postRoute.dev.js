@@ -1,8 +1,16 @@
-const express = require('express');
-const { postController } = require('../controllers');
-const validateToken = require('../middlewares/validateToken');
-const router = express.Router();
-const upload = require('../middlewares/upload');
+"use strict";
+
+var express = require('express');
+
+var _require = require('../controllers'),
+    postController = _require.postController;
+
+var validateToken = require('../middlewares/validateToken');
+
+var router = express.Router();
+
+var upload = require('../middlewares/upload');
+
 router.get('/', validateToken, postController.postView);
 router.post('/', validateToken, upload.array('medias', 5), postController.uploadPost);
 router.post('/bookmark', validateToken, postController.sendBookMark);
